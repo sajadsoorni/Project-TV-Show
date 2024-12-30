@@ -9,8 +9,31 @@
   </head>
 
   <body>
-    <div id="root"></div>
-
+    <header class="main-header">
+      <div class="container">
+        <h1>TV Show Episodes</h1>
+        <p class="header-attribution">
+          This project uses data originally from
+          <a href="https://tvmaze.com" target="_blank">TVMaze</a>
+        </p>
+      </div>
+    </header>
+    <main>
+      <div class="container">
+        <div class="cards-grid" id="cards-container"></div>
+      </div>
+    </main>
+    <footer class="footer-container">
+      <p>
+        Data provided by
+        <a
+          href="https://www.tvmaze.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          >TVMaze.com</a
+        >
+      </p>
+    </footer>
     <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
     <script src="episodes.js"></script>
 
