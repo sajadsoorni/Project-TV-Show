@@ -61,7 +61,9 @@ function filterEpisodes(searchTerm) {
   return nameMatch || summaryMatch;
   });
 
+// ***Clear previous cards***
   cardsContainer.innerHTML = "";
+// ***Create new card(s) according to filtered episodes***
   filteredEpisodes.forEach(createEpisodeCard);
 
   // ***If the search term is empty, hide the search count or reset it***
