@@ -1,6 +1,9 @@
 // Select the container where the cards will be inserted
 const cardsContainer = document.getElementById('cards-container');
 
+const searchBox = document.getElementById("search-box");
+const searchCount = document.getElementById("search-counter");
+
 // Function to create a card for each episode
 function createEpisodeCard(episode) {
   // Format season and episode number with zero-padding
@@ -46,6 +49,36 @@ function createEpisodeCard(episode) {
   cardsContainer.appendChild(card);
 }
 
+// ***Function to filter episodes based on search term***
+function filterEpisodes(searchTerm) {
+  const episodes = getAllEpisodes();
+  const lowerCaseSearchTerm = searchTerm.toLowerCase();  // ***to make case in-sensitive***
+
+  const filteredEpisodes = episodes.filter((episode) => {
+    const nameMatch = episode.name.toLowerCase().includes(lowerCaseSearchTerm);
+    const summaryMatch = episode.summary ? episode.summary.toLowerCase().includes(lowerCaseSearchTerm) : false;
+  
+  return nameMatch || summaryMatch;
+  });
+
+  cardsContainer.innerHTML = "";
+  filteredEpisodes.forEach(createEpisodeCard);
+
+  // ***If the search term is empty, hide the search count or reset it***
+  if (searchTerm === "") {
+    searchCount.style.display = "none";
+  } else {
+    searchCount.style.display = "block";
+    searchCount.textContent = `Displaying ${filteredEpisodes.length} / ${episodes.length} episodes.`;
+  }
+
+}
+
+// ***Event listener for input in the search box***
+searchBox.addEventListener("input", (event) => {
+  filterEpisodes(event.target.value);
+});
+
 // Function to load all episodes and display them
 function loadEpisodes() {
   // Get all episodes from the episodes.js
@@ -55,7 +88,11 @@ function loadEpisodes() {
   episodes.forEach((episode) => {
     createEpisodeCard(episode);
   });
+
+  searchTerm === "" // ***To empty search term on load***
+  searchCount.textContent = `Displaying ${episodes.length} / ${episodes.length} episode`
 }
+
 
 // Load the episodes when the page is loaded
 window.onload = loadEpisodes;
