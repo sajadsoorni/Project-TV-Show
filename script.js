@@ -3,6 +3,7 @@ const cardsContainer = document.getElementById('cards-container');
 
 const searchBox = document.getElementById("search-box");
 const searchCount = document.getElementById("search-counter");
+const episodeSelect = document.getElementById("episode-selector");
 
 // Function to create a card for each episode
 function createEpisodeCard(episode) {
@@ -13,6 +14,7 @@ function createEpisodeCard(episode) {
   // Create the card container
   const card = document.createElement('div');
   card.classList.add('card');
+  card.setAttribute("data-episode-id", `${seasonCode}${episodeCode}`); // Add data attribute
 
   // Create the image element
   const img = document.createElement('img');
@@ -57,8 +59,7 @@ function filterEpisodes(searchTerm) {
   const filteredEpisodes = episodes.filter((episode) => {
     const nameMatch = episode.name.toLowerCase().includes(lowerCaseSearchTerm);
     const summaryMatch = episode.summary ? episode.summary.toLowerCase().includes(lowerCaseSearchTerm) : false;
-  
-  return nameMatch || summaryMatch;
+    return nameMatch || summaryMatch;
   });
 
 // ***Clear previous cards***
@@ -67,13 +68,12 @@ function filterEpisodes(searchTerm) {
   filteredEpisodes.forEach(createEpisodeCard);
 
   // ***If the search term is empty, hide the search count or reset it***
-  if (searchTerm === "") {
-    searchCount.style.display = "none";
-  } else {
-    searchCount.style.display = "block";
-    searchCount.textContent = `Displaying ${filteredEpisodes.length} / ${episodes.length} episodes.`;
-  }
-
+  // if (searchTerm === "") {
+  //   searchCount.style.display = "none";
+  // } else {
+  //   searchCount.style.display = "block";
+  // }
+  searchCount.textContent = `Displaying ${filteredEpisodes.length} / ${episodes.length} episodes.`;
 }
 
 // ***Event listener for input in the search box***
@@ -91,10 +91,46 @@ function loadEpisodes() {
     createEpisodeCard(episode);
   });
 
-  searchTerm === "" // ***To empty search term on load***
-  searchCount.textContent = `Displaying ${episodes.length} / ${episodes.length} episode`
+  searchCount.textContent = `Displaying ${episodes.length} / ${episodes.length} episodes.`
+
+  populateEpisodeDropdown(episodes);
 }
 
+// Function to create episode dropdown
+function populateEpisodeDropdown(episodes) {
+  episodeSelect.innerHTML = "";
+
+  const defaultOption = document.createElement("option");
+  defaultOption.textContent = "All Episodes";
+  defaultOption.value = "";
+  episodeSelect.appendChild(defaultOption);
+
+  episodes.forEach((episode) => {
+    const seasonCode = String(episode.season).padStart(2, "0");
+    const episodeCode = String(episode.number).padStart(2, "0");
+    const option = document.createElement("option");
+    option.value = `${seasonCode}${episodeCode}`;
+    option.textContent = `S${seasonCode}E${episodeCode} - ${episode.name}`;
+    episodeSelect.appendChild(option);
+  });
+}
+
+// Event listener for episode selection
+episodeSelect.addEventListener("change", (event) => {
+  const selectedValue = event.target.value;
+
+  const allCards = cardsContainer.querySelectorAll(".card");
+  allCards.forEach(card => card.style.display = "none");
+  
+  if (selectedValue === "") {
+    allCards.forEach(card => card.style.display = "block");
+  } else {
+    const selectedCard = cardsContainer.querySelector(`.card[data-episode-id="${selectedValue}"]`);
+    if (selectedCard) {
+      selectedCard.style.display = "block";
+    }
+  }
+});
 
 // Load the episodes when the page is loaded
 window.onload = loadEpisodes;
