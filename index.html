@@ -18,20 +18,20 @@
         </p>
       </div>
     </header>
-    <section id="features">
-      <div id="search-container">
-        <div id="search-bar">
-          <img id="search-icon" src="./img/search-icon.png" alt="Search Icon">
-          <input type="text" id="search-box" placeholder="Search">
+    <div class="search-container">
+      <div class="container">
+        <div class="search-wrapper">
+          <input
+            type="search"
+            id="episode-search"
+            placeholder="Search episodes..."
+          />
+          <select id="episode-selector">
+            <option value="">Select Episode</option>
+          </select>
         </div>
-        <p id="search-counter"></p>
       </div>
-      <div id="select-episode">
-        <select id="episode-selector">
-          <option value="">Select an episode...</option>
-        </select>
-      </div>
-    </section>
+    </div>
     <main>
       <div class="container">
         <div class="cards-grid" id="cards-container"></div>
