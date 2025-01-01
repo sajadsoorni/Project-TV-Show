@@ -1,9 +1,8 @@
 // Select the container where the cards will be inserted
 const cardsContainer = document.getElementById('cards-container');
-
-const searchBox = document.getElementById("search-box");
-const searchCount = document.getElementById("search-counter");
-const episodeSelect = document.getElementById("episode-selector");
+const searchInput = document.getElementById('episode-search');
+const episodeSelector = document.getElementById('episode-selector');
+let allEpisodes = [];
 
 // Function to create a card for each episode
 function createEpisodeCard(episode) {
@@ -14,7 +13,6 @@ function createEpisodeCard(episode) {
   // Create the card container
   const card = document.createElement('div');
   card.classList.add('card');
-  card.setAttribute("data-episode-id", `${seasonCode}${episodeCode}`); // Add data attribute
 
   // Create the image element
   const img = document.createElement('img');
@@ -51,86 +49,80 @@ function createEpisodeCard(episode) {
   cardsContainer.appendChild(card);
 }
 
-// ***Function to filter episodes based on search term***
+// Function to filter episodes based on search term
 function filterEpisodes(searchTerm) {
-  const episodes = getAllEpisodes();
-  const lowerCaseSearchTerm = searchTerm.toLowerCase();  // ***to make case in-sensitive***
+  searchTerm = searchTerm.toLowerCase();
 
-  const filteredEpisodes = episodes.filter((episode) => {
-    const nameMatch = episode.name.toLowerCase().includes(lowerCaseSearchTerm);
-    const summaryMatch = episode.summary ? episode.summary.toLowerCase().includes(lowerCaseSearchTerm) : false;
-    return nameMatch || summaryMatch;
-  });
-
-// ***Clear previous cards***
-  cardsContainer.innerHTML = "";
-// ***Create new card(s) according to filtered episodes***
-  filteredEpisodes.forEach(createEpisodeCard);
-
-  // ***If the search term is empty, hide the search count or reset it***
-  // if (searchTerm === "") {
-  //   searchCount.style.display = "none";
-  // } else {
-  //   searchCount.style.display = "block";
-  // }
-  searchCount.textContent = `Displaying ${filteredEpisodes.length} / ${episodes.length} episodes.`;
+  return allEpisodes.filter(
+    (episode) =>
+      episode.name.toLowerCase().includes(searchTerm) ||
+      episode.summary.toLowerCase().includes(searchTerm)
+  );
 }
 
-// ***Event listener for input in the search box***
-searchBox.addEventListener("input", (event) => {
-  filterEpisodes(event.target.value);
-});
+// Function to display episodes
+function displayEpisodes(episodes) {
+  cardsContainer.innerHTML = '';
+  episodes.forEach((episode) => createEpisodeCard(episode));
+
+  // Update search count
+  const searchCount = document.querySelector('.search-wrapper');
+  const countDisplay =
+    document.getElementById('episode-count') || document.createElement('div');
+  countDisplay.id = 'episode-count';
+  countDisplay.textContent = `${episodes.length} / ${allEpisodes.length} episodes`;
+  searchCount.appendChild(countDisplay);
+}
+
+// Function to populate the select element with episode options
+function populateEpisodeSelector(episodes) {
+  episodeSelector.innerHTML = '<option value="">Select Episode</option>'; // Default option
+
+  episodes.forEach((episode) => {
+    const seasonCode = String(episode.season).padStart(2, '0');
+    const episodeCode = String(episode.number).padStart(2, '0');
+    const option = document.createElement('option');
+    option.value = episode.id; // Use episode ID as the value
+    option.textContent = `S${seasonCode}E${episodeCode} - ${episode.name}`;
+    episodeSelector.appendChild(option);
+  });
+}
+
+// Function to handle episode selection
+function handleEpisodeSelection(event) {
+  const selectedEpisodeId = event.target.value;
+  if (selectedEpisodeId) {
+    const selectedEpisode = allEpisodes.find(
+      (episode) => episode.id === parseInt(selectedEpisodeId, 10)
+    );
+    displayEpisodes([selectedEpisode]); // Display only the selected episode
+  } else {
+    displayEpisodes(allEpisodes); // Display all episodes if no selection
+  }
+}
+
+// Function to handle search input
+function handleSearch(event) {
+  const searchTerm = event.target.value;
+  const filteredEpisodes = searchTerm
+    ? filterEpisodes(searchTerm)
+    : allEpisodes;
+  displayEpisodes(filteredEpisodes);
+}
 
 // Function to load all episodes and display them
 function loadEpisodes() {
   // Get all episodes from the episodes.js
-  const episodes = getAllEpisodes();
+  allEpisodes = getAllEpisodes();
+  displayEpisodes(allEpisodes);
 
-  // Iterate over the episodes and create a card for each
-  episodes.forEach((episode) => {
-    createEpisodeCard(episode);
-  });
+  // Populate the select element
+  populateEpisodeSelector(allEpisodes);
 
-  searchCount.textContent = `Displaying ${episodes.length} / ${episodes.length} episodes.`
-
-  populateEpisodeDropdown(episodes);
+  // Add search and select event listeners
+  searchInput.addEventListener('input', handleSearch);
+  episodeSelector.addEventListener('change', handleEpisodeSelection);
 }
-
-// Function to create episode dropdown
-function populateEpisodeDropdown(episodes) {
-  episodeSelect.innerHTML = "";
-
-  const defaultOption = document.createElement("option");
-  defaultOption.textContent = "All Episodes";
-  defaultOption.value = "";
-  episodeSelect.appendChild(defaultOption);
-
-  episodes.forEach((episode) => {
-    const seasonCode = String(episode.season).padStart(2, "0");
-    const episodeCode = String(episode.number).padStart(2, "0");
-    const option = document.createElement("option");
-    option.value = `${seasonCode}${episodeCode}`;
-    option.textContent = `S${seasonCode}E${episodeCode} - ${episode.name}`;
-    episodeSelect.appendChild(option);
-  });
-}
-
-// Event listener for episode selection
-episodeSelect.addEventListener("change", (event) => {
-  const selectedValue = event.target.value;
-
-  const allCards = cardsContainer.querySelectorAll(".card");
-  allCards.forEach(card => card.style.display = "none");
-  
-  if (selectedValue === "") {
-    allCards.forEach(card => card.style.display = "block");
-  } else {
-    const selectedCard = cardsContainer.querySelector(`.card[data-episode-id="${selectedValue}"]`);
-    if (selectedCard) {
-      selectedCard.style.display = "block";
-    }
-  }
-});
 
 // Load the episodes when the page is loaded
 window.onload = loadEpisodes;
