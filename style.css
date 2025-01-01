@@ -217,9 +217,36 @@ body {
 @media (max-width: 900px) {
   .cards-grid {
     columns: 2;
+    margin-top: 9rem;
+    padding-top: 0;
   }
   #episode-count {
     font-size: 15px;
+  }
+
+  .search-wrapper {
+    display: block;
+    padding: 0 1rem;
+  }
+  #episode-search {
+    width: 50%;
+  }
+
+  #episode-count {
+    margin-top: 1rem;
+    width: 50%;
+  }
+  .search-container .container {
+    padding: 1rem 0rem;
+  }
+
+  #episode-selector {
+    margin-top: 1rem;
+    width: 50%;
+  }
+
+  .container {
+    padding: 1rem;
   }
 }
 
@@ -251,7 +278,6 @@ body {
 
   .search-wrapper {
     display: block;
-    max-width: 100%;
     padding: 0 1rem;
   }
 
