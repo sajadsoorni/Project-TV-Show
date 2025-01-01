@@ -9,14 +9,19 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   background-color: #f5f5f5;
-  padding-top: 100px;
+  padding-top: 160px; /* Increased to accommodate search bar */
   color: #333;
 }
 
 /* Header Styles */
 .main-header {
-  background-color: #2c3e50;
-  color: white;
+  background: rgb(26, 0, 45);
+  background: linear-gradient(
+    90deg,
+    rgba(26, 0, 45, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  color: rgb(255, 255, 255);
   position: fixed;
   top: 0;
   left: 0;
@@ -28,7 +33,6 @@ body {
 }
 
 .main-header .container {
-  padding: 1.5rem 2rem;
   width: 100%;
 }
 
@@ -36,6 +40,75 @@ body {
   font-size: 2rem;
 }
 
+/* Search Bar Styles */
+.search-container {
+  background: rgb(26, 0, 45);
+  background: linear-gradient(
+    90deg,
+    rgba(26, 0, 45, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  position: fixed;
+  top: 100px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.search-container .container {
+  padding: 1rem 2rem;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+  max-width: 100%;
+  column-gap: 2rem;
+}
+
+#episode-count {
+  color: #2d3748;
+  white-space: nowrap;
+  font-weight: 500;
+  background: white;
+  padding: 0.6rem 0.6rem;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 6px;
+  border: 1px solid #e0e4e8;
+  transition: all 0.2s ease;
+}
+
+#episode-search {
+  width: 60%;
+  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 1rem;
+  transition: box-shadow 0.3s ease;
+}
+#episode-selector {
+  padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+  border: 1px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2d3748;
+
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  background-position: right 1rem top 50%;
+  background-size: 0.8rem auto;
+}
+#episode-search:focus {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Rest of your existing styles... */
 .header-attribution {
   color: #ecf0f1;
   font-size: 0.9rem;
@@ -52,73 +125,9 @@ body {
   text-decoration: underline;
 }
 
-#features {
-  color: #ecf0f1;
-  box-shadow: 0 0 10px black inset;
-  text-shadow: 0 0 5px #333;
-  background: #6b1725;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  margin: auto;
-  padding: 1rem;
-}
-
-#search-container, #select-episode {
-  margin: 0 auto;
-  text-align: center;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-#search-bar {
-  display: flex;
-  flex-direction: row;
-}
-
-#search-icon {
-  width: 30px;
-  margin-right: 5px;
-}
-
-#search-box {
-  border-radius: 15px;
-  font-size: 0.7rem;
-  padding: 0.3rem 0.5rem;
-  width: 35%;
-  transition: 0.5s ease-in-out;
-}
-
-#search-box:focus{
-  width: 70%;
-  outline: none;
-}
-
-#search-counter {
-  width: fit-content;
-  font-size: 0.7rem;
-  width: 50%;
-}
-
-#episode-selector {
-  border-radius: 15px;
-  font-size: 0.7rem;
-  padding: 0.3rem 0.5rem;
-  width: 50%;
-  text-align: center;
-  margin: 0 auto;
-}
-
 .container {
   max-width: 1280px;
-  margin: 50px auto;
+  margin: 0 auto;
   padding: 2rem;
 }
 
@@ -126,6 +135,7 @@ body {
 .cards-grid {
   columns: 4;
   column-gap: 2rem;
+  margin-top: 1rem;
 }
 
 .card {
@@ -163,12 +173,12 @@ body {
 }
 
 .episode-number {
-  color: #666;
+  color: #fff;
   font-size: 0.9rem;
   font-weight: bold;
   margin-bottom: 1rem;
   padding: 0.25rem 0.5rem;
-  background-color: #f0f0f0;
+  background-color: #1a002d8a;
   border-radius: 4px;
   display: inline-block;
 }
@@ -208,9 +218,16 @@ body {
   .cards-grid {
     columns: 2;
   }
+  #episode-count {
+    font-size: 15px;
+  }
 }
 
 @media (max-width: 600px) {
+  body {
+    padding-top: 140px;
+  }
+
   .main-header {
     height: 80px;
     min-height: 80px;
@@ -228,9 +245,34 @@ body {
     font-size: 0.8rem;
   }
 
+  .search-container {
+    top: 80px;
+  }
+
+  .search-wrapper {
+    display: block;
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+
+  #episode-search {
+    width: 100%;
+  }
+
+  #episode-count {
+    margin-top: 1rem;
+  }
+  .search-container .container {
+    padding: 1rem 0rem;
+  }
+
+  #episode-selector {
+    margin-top: 1rem;
+    width: 100%;
+  }
   .cards-grid {
     columns: 1;
-    margin-top: 0;
+    margin-top: 9rem;
     padding-top: 0;
   }
 
