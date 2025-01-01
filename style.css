@@ -217,7 +217,6 @@ body {
 @media (max-width: 900px) {
   .cards-grid {
     columns: 2;
-    margin-top: 9rem;
     padding-top: 0;
   }
   #episode-count {
@@ -225,24 +224,21 @@ body {
   }
 
   .search-wrapper {
-    display: block;
     padding: 0 1rem;
   }
   #episode-search {
-    width: 50%;
+    width: 33%;
   }
 
   #episode-count {
-    margin-top: 1rem;
-    width: 50%;
+    width: 33%;
   }
   .search-container .container {
     padding: 1rem 0rem;
   }
 
   #episode-selector {
-    margin-top: 1rem;
-    width: 50%;
+    width: 33%;
   }
 
   .container {
