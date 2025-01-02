@@ -54,6 +54,15 @@ body {
   right: 0;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(
+    0.15turn,
+    rgb(255, 200, 0),
+    rgb(136, 0, 255),
+    rgb(255, 247, 0)
+  );
+  border-image-slice: 1;
+  width: 100%;
 }
 
 .search-container .container {
@@ -70,13 +79,12 @@ body {
 }
 
 #episode-count {
-  color: #2d3748;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
   white-space: nowrap;
-  font-weight: 500;
-  background: white;
   padding: 0.6rem 0.6rem;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 6px;
   border: 1px solid #e0e4e8;
   transition: all 0.2s ease;
 }
@@ -90,8 +98,9 @@ body {
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
 }
+
 #episode-selector {
-  padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -104,6 +113,7 @@ body {
   background-position: right 1rem top 50%;
   background-size: 0.8rem auto;
 }
+
 #episode-search:focus {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
@@ -283,6 +293,8 @@ body {
 
   #episode-count {
     margin-top: 1rem;
+    width: 9rem;
+    text-align: center;
   }
   .search-container .container {
     padding: 1rem 0rem;
