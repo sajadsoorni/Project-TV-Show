@@ -2,7 +2,9 @@
 const cardsContainer = document.getElementById('cards-container');
 const searchInput = document.getElementById('episode-search');
 const episodeSelector = document.getElementById('episode-selector');
+const showSelector = document.getElementById('show-selector');
 let allEpisodes = [];
+let allShows = [];
 
 // Function to create a card for each episode
 function createEpisodeCard(episode) {
@@ -124,7 +126,7 @@ function handleSearch(event) {
 }
 
 // Function to load all episodes using fetch
-async function loadEpisodes() {
+async function loadEpisodes(showId) {
   // Display a loading message while fetching data
   const loadingMessage = document.createElement('p');
   loadingMessage.id = 'loading-message';
@@ -133,7 +135,7 @@ async function loadEpisodes() {
 
   try {
     // Fetch data from the API
-    const response = await fetch('https://api.tvmaze.com/shows/82/episodes');
+    const response = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`);
 
     // Check for a successful response
     if (!response.ok) {
@@ -162,5 +164,60 @@ async function loadEpisodes() {
   }
 }
 
+async function loadShows() {
+  if (allShows.shows) {
+    populateShowSelector(allShows.shows);
+    return;
+  }
+
+  const loadingMessage = document.createElement('p');
+  loadingMessage.id = "loading-message";
+  loadingMessage.textContent = "Loading shows, please wait...";
+  cardsContainer.appendChild(loadingMessage);
+  
+  try {
+    const response = await fetch("https://api.tvmaze.com/shows");
+    if (!response.ok) {
+      throw new Error(`Failed to fetch shows: ${response.statusText}`);
+    }
+
+    const shows = await response.json();
+    allShows.show = shows;
+    populateShowSelector(shows);
+  } catch (error) {
+    cardsContainer.innerHTML = `<p id="error-message">An error occurred while loading shows. Please try again later.</p>`;
+  } finally {
+    const loadingMessage = document.getElementById("loading-message");
+    if (loadingMessage) {
+      loadingMessage.remove();
+    }
+  }
+}
+
+function populateShowSelector(shows) {
+  shows.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  showSelector.innerHTML = "<option value=''>Select Show</option>";
+  shows.forEach((show) => {
+    const option = document.createElement("option");
+    option.value = show.id;
+    option.textContent = show.name;
+    showSelector.appendChild(option);
+  });
+}
+
+function handelShowSelector(event) {
+  const selectedShowId = event.target.value;
+
+  if (selectedShowId) {
+    loadEpisodes(selectedShowId);
+  } else {
+    cardsContainer.innerHTML = "";
+    episodeSelector.innerHTML = "<option value=''>Select Episode</option>";
+  }
+}
+
 // Load the episodes when the page is loaded
-window.onload = loadEpisodes;
+window.onload = function() {
+  loadShows();
+  showSelector.addEventListener("change", handelShowSelector);
+}

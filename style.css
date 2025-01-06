@@ -118,6 +118,21 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
+#show-selector {
+  padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+  border: 1px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2d3748;
+
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  background-position: right 1rem top 50%;
+  background-size: 0.8rem auto;
+}
+
 /* Rest of your existing styles... */
 .header-attribution {
   color: #ecf0f1;
