@@ -90,7 +90,6 @@ body {
 }
 
 #episode-search {
-  width: 60%;
   padding: 0.8rem 2.5rem 0.8rem 1rem;
   border: none;
   border-radius: 8px;
@@ -237,6 +236,29 @@ body {
   .cards-grid {
     columns: 3;
   }
+
+  #episode-search {
+    width: 25%;
+  }
+
+  #episode-count {
+    width: 25%;
+  }
+  .search-container .container {
+    padding: 1rem 0rem;
+  }
+
+  #episode-selector {
+    width: 25%;
+  }
+
+  #show-selector {
+    width: 25%;
+  }
+
+  .search-container .container {
+    padding: 1rem 2rem;
+  }
 }
 
 @media (max-width: 900px) {
@@ -251,19 +273,24 @@ body {
   .search-wrapper {
     padding: 0 1rem;
   }
+
   #episode-search {
-    width: 33%;
+    width: 25%;
   }
 
   #episode-count {
-    width: 33%;
+    width: 25%;
   }
   .search-container .container {
     padding: 1rem 0rem;
   }
 
   #episode-selector {
-    width: 33%;
+    width: 25%;
+  }
+
+  #show-selector {
+    width: 25%;
   }
 
   .container {
@@ -319,9 +346,14 @@ body {
     margin-top: 1rem;
     width: 100%;
   }
+
+  #show-selector {
+    margin-top: 1rem;
+    width: 100%;
+  }
   .cards-grid {
     columns: 1;
-    margin-top: 9rem;
+    margin-top: 13rem;
     padding-top: 0;
   }
 
