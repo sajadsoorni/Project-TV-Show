@@ -9,25 +9,14 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   background-color: #f5f5f5;
-  padding-top: 160px; /* Increased to accommodate search bar */
   color: #333;
 }
 
 /* Header Styles */
 .main-header {
   background: rgb(26, 0, 45);
-  background: linear-gradient(
-    90deg,
-    rgba(26, 0, 45, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: linear-gradient(90deg, rgba(26, 0, 45, 1) 0%, rgba(0, 0, 0, 1) 100%);
   color: rgb(255, 255, 255);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  height: 100px;
   display: flex;
   align-items: center;
 }
@@ -43,24 +32,10 @@ body {
 /* Search Bar Styles */
 .search-container {
   background: rgb(26, 0, 45);
-  background: linear-gradient(
-    90deg,
-    rgba(26, 0, 45, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-  position: fixed;
-  top: 100px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  background: linear-gradient(90deg, rgba(26, 0, 45, 1) 0%, rgba(0, 0, 0, 1) 100%);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-bottom: 2px solid transparent;
-  border-image: linear-gradient(
-    0.15turn,
-    rgb(255, 200, 0),
-    rgb(136, 0, 255),
-    rgb(255, 247, 0)
-  );
+  border-image: linear-gradient(0.15turn, rgb(255, 200, 0), rgb(136, 0, 255), rgb(255, 247, 0));
   border-image-slice: 1;
   width: 100%;
 }
@@ -75,22 +50,29 @@ body {
   align-items: center;
   position: relative;
   max-width: 100%;
-  column-gap: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
+#episode-search,
+#show-selector,
+#episode-selector {
+  flex: 1;
+  min-width: 200px;
+}
 #episode-count {
   color: #fff;
   text-align: center;
   font-size: 1rem;
   white-space: nowrap;
-  padding: 0.6rem 0.6rem;
+  padding: 0.25rem 0.6rem 0.25rem 0.6rem;
   border-radius: 8px;
   border: 1px solid #e0e4e8;
   transition: all 0.2s ease;
 }
 
 #episode-search {
-  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  padding: 0.4rem 1rem 0.4rem 1rem;
   border: none;
   border-radius: 8px;
   background-color: white;
@@ -99,7 +81,7 @@ body {
 }
 
 #episode-selector {
-  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
+  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -118,7 +100,7 @@ body {
 }
 
 #show-selector {
-  padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -130,6 +112,27 @@ body {
   transition: all 0.2s ease;
   background-position: right 1rem top 50%;
   background-size: 0.8rem auto;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background-color: #f1c40fa4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: inline-block;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #f1c40f48;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Rest of your existing styles... */
@@ -152,7 +155,7 @@ body {
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 /* The key changes for Pinterest-style layout */
@@ -236,29 +239,6 @@ body {
   .cards-grid {
     columns: 3;
   }
-
-  #episode-search {
-    width: 25%;
-  }
-
-  #episode-count {
-    width: 25%;
-  }
-  .search-container .container {
-    padding: 1rem 0rem;
-  }
-
-  #episode-selector {
-    width: 25%;
-  }
-
-  #show-selector {
-    width: 25%;
-  }
-
-  .search-container .container {
-    padding: 1rem 2rem;
-  }
 }
 
 @media (max-width: 900px) {
@@ -274,23 +254,8 @@ body {
     padding: 0 1rem;
   }
 
-  #episode-search {
-    width: 25%;
-  }
-
-  #episode-count {
-    width: 25%;
-  }
   .search-container .container {
     padding: 1rem 0rem;
-  }
-
-  #episode-selector {
-    width: 25%;
-  }
-
-  #show-selector {
-    width: 25%;
   }
 
   .container {
@@ -299,10 +264,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  body {
-    padding-top: 140px;
-  }
-
   .main-header {
     height: 80px;
     min-height: 80px;
@@ -353,11 +314,14 @@ body {
   }
   .cards-grid {
     columns: 1;
-    margin-top: 13rem;
     padding-top: 0;
   }
 
   .container {
     padding: 1rem;
+  }
+
+  .back-button {
+    margin-top: 1rem;
   }
 }
