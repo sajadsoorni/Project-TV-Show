@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TV Show Project | Sajad Soornisofla (sajadsoorni)</title>
     <link href="style.css" rel="stylesheet" />
+    <link href="shows.css" rel="stylesheet" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
   </head>
 
@@ -18,14 +19,11 @@
         </p>
       </div>
     </header>
+
     <div class="search-container">
       <div class="container">
         <div class="search-wrapper">
-          <input
-            type="search"
-            id="episode-search"
-            placeholder="Search episodes..."
-          />
+          <input type="search" id="episode-search" placeholder="Search episodes..." />
           <select id="show-selector">
             <option value="">Select Show</option>
           </select>
@@ -35,20 +33,18 @@
         </div>
       </div>
     </div>
+
     <main>
       <div class="container">
         <div class="cards-grid" id="cards-container"></div>
+        <div class="tv-shows" id="shows-container"></div>
       </div>
     </main>
+
     <footer class="footer-container">
       <p>
         Data provided by
-        <a
-          href="https://www.tvmaze.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          >TVMaze.com</a
-        >
+        <a href="https://www.tvmaze.com" target="_blank" rel="noopener noreferrer">TVMaze.com</a>
       </p>
     </footer>
     <!-- Loads YOUR javascript code -->
