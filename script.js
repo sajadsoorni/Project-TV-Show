@@ -69,7 +69,11 @@ const createShowCard = (show) => {
   const title = document.createElement("h2");
   title.textContent = show.name;
   title.classList.add("tv-show-title");
-  title.addEventListener("click", () => loadEpisodesForShow(show.id));
+  title.addEventListener("click", () => {
+    mainHeader.textContent = show.name;
+
+    loadEpisodesForShow(show.id);
+  });
 
   const genres = document.createElement("p");
   genres.classList.add("tv-show-genres");
@@ -116,8 +120,6 @@ const showShowsListing = () => {
 
 // Episode listing view
 const showEpisodesListing = () => {
-  mainHeader.textContent = "TV Show Episodes";
-
   // Update UI elements
   searchInput.placeholder = "Search episodes...";
   episodeSelector.classList.remove("hidden");
@@ -230,14 +232,46 @@ const populateEpisodeSelector = (episodes) => {
 
 // Populate show selector
 const populateShowSelector = (shows) => {
-  shows.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+  // Clear existing options
   showSelector.innerHTML = "<option value=''>Select Show</option>";
 
-  shows.forEach((show) => {
-    const option = document.createElement("option");
-    option.value = show.id;
-    option.textContent = show.name;
-    showSelector.appendChild(option);
+  // Get unique genres from all shows
+  const allGenres = [...new Set(shows.flatMap((show) => show.genres))].sort();
+
+  // Create a map to store shows by genre
+  const showsByGenre = new Map();
+
+  // Initialize genre groups
+  allGenres.forEach((genre) => {
+    showsByGenre.set(genre, []);
+  });
+
+  // Sort shows by name and group them by genre
+  const sortedShows = [...shows].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
+
+  // Add shows to their respective genre groups
+  sortedShows.forEach((show) => {
+    show.genres.forEach((genre) => {
+      showsByGenre.get(genre).push(show);
+    });
+  });
+
+  // Create optgroups for each genre and add shows
+  allGenres.forEach((genre) => {
+    const showsInGenre = showsByGenre.get(genre);
+    if (showsInGenre.length > 0) {
+      const optgroup = document.createElement("optgroup");
+      optgroup.label = genre;
+
+      showsInGenre.forEach((show) => {
+        const option = document.createElement("option");
+        option.value = show.id;
+        option.textContent = show.name;
+        optgroup.appendChild(option);
+      });
+
+      showSelector.appendChild(optgroup);
+    }
   });
 };
 
@@ -257,6 +291,10 @@ const handleEpisodeSelection = (event) => {
 const handleShowSelection = (event) => {
   const selectedShowId = event.target.value;
   if (selectedShowId) {
+    // Update the header with selected show name
+    const selectedShow = cache.shows.find((show) => show.id === parseInt(selectedShowId));
+    mainHeader.textContent = selectedShow.name;
+
     loadEpisodesForShow(selectedShowId);
   } else {
     showShowsListing();
