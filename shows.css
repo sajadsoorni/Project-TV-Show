@@ -37,7 +37,7 @@
 
 .tv-show-title {
   margin: 0;
-  color: #1a1a1a;
+  color: #1a002d;
   font-size: 2rem;
   font-weight: 700;
   cursor: pointer;
@@ -46,11 +46,11 @@
 }
 
 .tv-show-title:hover {
-  color: #3498db;
+  color: #24003e;
 }
 
 .tv-show-genres {
-  color: #3498db;
+  color: #1a002da1;
   font-size: 1rem;
   font-weight: 500;
   display: flex;

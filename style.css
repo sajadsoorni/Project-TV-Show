@@ -21,6 +21,13 @@ body {
   align-items: center;
 }
 
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
 .main-header .container {
   width: 100%;
 }
@@ -275,6 +282,11 @@ body {
 
   .main-header h1 {
     font-size: 1.5rem;
+  }
+
+  .top-header {
+    flex-direction: column-reverse;
+    align-items: flex-start;
   }
 
   .header-attribution {
