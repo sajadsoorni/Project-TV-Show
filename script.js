@@ -31,6 +31,7 @@ const createEpisodeCard = (episode) => {
   const img = document.createElement("img");
   img.src = episode.image?.medium || "placeholder.jpg";
   img.alt = episode.name;
+  img.loading = "lazy";
 
   const cardContent = document.createElement("div");
   cardContent.classList.add("card-content");
@@ -60,6 +61,7 @@ const createShowCard = (show) => {
   img.src = show.image?.medium || "placeholder.jpg";
   img.alt = show.name;
   img.classList.add("tv-show-image");
+  img.loading = "lazy";
 
   const content = document.createElement("div");
   content.classList.add("tv-show-content");
