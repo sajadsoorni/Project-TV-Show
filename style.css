@@ -9,25 +9,14 @@ body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   background-color: #f5f5f5;
-  padding-top: 160px; /* Increased to accommodate search bar */
   color: #333;
 }
 
 /* Header Styles */
 .main-header {
   background: rgb(26, 0, 45);
-  background: linear-gradient(
-    90deg,
-    rgba(26, 0, 45, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: linear-gradient(90deg, rgba(26, 0, 45, 1) 0%, rgba(0, 0, 0, 1) 100%);
   color: rgb(255, 255, 255);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  height: 100px;
   display: flex;
   align-items: center;
 }
@@ -43,17 +32,12 @@ body {
 /* Search Bar Styles */
 .search-container {
   background: rgb(26, 0, 45);
-  background: linear-gradient(
-    90deg,
-    rgba(26, 0, 45, 1) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
-  position: fixed;
-  top: 100px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  background: linear-gradient(90deg, rgba(26, 0, 45, 1) 0%, rgba(0, 0, 0, 1) 100%);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(0.15turn, rgb(255, 200, 0), rgb(136, 0, 255), rgb(255, 247, 0));
+  border-image-slice: 1;
+  width: 100%;
 }
 
 .search-container .container {
@@ -66,32 +50,38 @@ body {
   align-items: center;
   position: relative;
   max-width: 100%;
-  column-gap: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
+#episode-search,
+#show-selector,
+#episode-selector {
+  flex: 1;
+  min-width: 200px;
+}
 #episode-count {
-  color: #2d3748;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
   white-space: nowrap;
-  font-weight: 500;
-  background: white;
-  padding: 0.6rem 0.6rem;
+  padding: 0.25rem 0.6rem 0.25rem 0.6rem;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.04) 0px 2px 6px;
   border: 1px solid #e0e4e8;
   transition: all 0.2s ease;
 }
 
 #episode-search {
-  width: 60%;
-  padding: 0.8rem 2.5rem 0.8rem 1rem;
+  padding: 0.4rem 1rem 0.4rem 1rem;
   border: none;
   border-radius: 8px;
   background-color: white;
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
 }
+
 #episode-selector {
-  padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -104,8 +94,45 @@ body {
   background-position: right 1rem top 50%;
   background-size: 0.8rem auto;
 }
+
 #episode-search:focus {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+}
+
+#show-selector {
+  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
+  border: 1px solid #e0e4e8;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #2d3748;
+
+  background-color: #ffffff;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  background-position: right 1rem top 50%;
+  background-size: 0.8rem auto;
+}
+
+.back-button {
+  padding: 0.5rem 1rem;
+  background-color: #f1c40fa4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: inline-block;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #f1c40f48;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Rest of your existing styles... */
@@ -128,7 +155,7 @@ body {
 .container {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem 2rem;
 }
 
 /* The key changes for Pinterest-style layout */
@@ -226,19 +253,9 @@ body {
   .search-wrapper {
     padding: 0 1rem;
   }
-  #episode-search {
-    width: 33%;
-  }
 
-  #episode-count {
-    width: 33%;
-  }
   .search-container .container {
     padding: 1rem 0rem;
-  }
-
-  #episode-selector {
-    width: 33%;
   }
 
   .container {
@@ -247,10 +264,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  body {
-    padding-top: 140px;
-  }
-
   .main-header {
     height: 80px;
     min-height: 80px;
@@ -283,6 +296,8 @@ body {
 
   #episode-count {
     margin-top: 1rem;
+    width: 9rem;
+    text-align: center;
   }
   .search-container .container {
     padding: 1rem 0rem;
@@ -292,13 +307,21 @@ body {
     margin-top: 1rem;
     width: 100%;
   }
+
+  #show-selector {
+    margin-top: 1rem;
+    width: 100%;
+  }
   .cards-grid {
     columns: 1;
-    margin-top: 9rem;
     padding-top: 0;
   }
 
   .container {
     padding: 1rem;
+  }
+
+  .back-button {
+    margin-top: 1rem;
   }
 }

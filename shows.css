@@ -1,0 +1,150 @@
+/* Reset default styles */
+.tv-show-card {
+  display: flex;
+  width: 100%;
+  max-width: 1280px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin: 20px auto;
+  min-height: 400px;
+}
+
+.tv-show-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.tv-show-image {
+  flex-shrink: 0;
+  width: 350px;
+  object-fit: cover;
+  border-right: none;
+  position: relative;
+}
+
+.tv-show-content {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
+  position: relative;
+}
+
+.tv-show-title {
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  line-height: 1.2;
+}
+
+.tv-show-title:hover {
+  color: #3498db;
+}
+
+.tv-show-genres {
+  color: #3498db;
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tv-show-status,
+.tv-show-rating,
+.tv-show-runtime {
+  color: #4a4a4a;
+  font-size: 1.1rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tv-show-summary {
+  color: #2c3e50;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-top: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  flex-grow: 1;
+  position: relative;
+  overflow-y: auto;
+  max-height: 200px;
+}
+
+.tv-show-summary::-webkit-scrollbar {
+  width: 6px;
+}
+
+.tv-show-summary::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.tv-show-summary::-webkit-scrollbar-thumb {
+  background: #1a002d;
+  border-radius: 3px;
+}
+
+/* Container styles */
+.tv-shows-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Responsive design */
+@media (max-width: 900px) {
+  .tv-show-card {
+    flex-direction: column;
+    min-height: unset;
+  }
+
+  .tv-show-image {
+    width: 100%;
+    height: 400px;
+  }
+
+  .tv-show-content {
+    min-height: 400px;
+  }
+
+  .tv-show-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .tv-show-image {
+    height: auto;
+  }
+
+  .tv-show-content {
+    padding: 20px;
+    min-height: 350px;
+  }
+
+  .tv-show-title {
+    font-size: 1.5rem;
+  }
+
+  .tv-show-summary {
+    font-size: 1rem;
+    padding: 15px;
+  }
+}
