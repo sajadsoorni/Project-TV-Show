@@ -38,13 +38,8 @@ body {
 
 /* Search Bar Styles */
 .search-container {
-  background: rgb(26, 0, 45);
-  background: linear-gradient(90deg, rgba(26, 0, 45, 1) 0%, rgba(0, 0, 0, 1) 100%);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  border-bottom: 2px solid transparent;
-  border-image: linear-gradient(0.15turn, rgb(255, 200, 0), rgb(136, 0, 255), rgb(255, 247, 0));
-  border-image-slice: 1;
   width: 100%;
+  margin-top: 1rem;
 }
 
 .search-container .container {
@@ -67,28 +62,30 @@ body {
   flex: 1;
   min-width: 200px;
 }
+
 #episode-count {
-  color: #fff;
+  color: #000000;
   text-align: center;
   font-size: 1rem;
   white-space: nowrap;
-  padding: 0.25rem 0.6rem 0.25rem 0.6rem;
+  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
   border-radius: 8px;
   border: 1px solid #e0e4e8;
   transition: all 0.2s ease;
 }
 
 #episode-search {
-  padding: 0.4rem 1rem 0.4rem 1rem;
+  padding: 0.85rem 1rem 0.85rem 1rem;
   border: none;
   border-radius: 8px;
+  flex: 0 0 auto;
   background-color: white;
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
 }
 
 #episode-selector {
-  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -99,31 +96,25 @@ body {
   outline: none;
   transition: all 0.2s ease;
   background-position: right 1rem top 50%;
-  background-size: 0.8rem auto;
-}
-
-#episode-search:focus {
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
 #show-selector {
-  padding: 0.35rem 2.5rem 0.35rem 0.7rem;
+  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
   color: #2d3748;
-
+  flex: 0 0 auto;
   background-color: #ffffff;
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
   background-position: right 1rem top 50%;
-  background-size: 0.8rem auto;
 }
 
 .back-button {
-  padding: 0.5rem 1rem;
-  background-color: #f1c40fa4;
+  padding: 0.8rem 1rem;
+  background-color: #1a002dd5;
   color: white;
   border: none;
   border-radius: 8px;
@@ -135,7 +126,7 @@ body {
 }
 
 .back-button:hover {
-  background-color: #f1c40f48;
+  background-color: #1a002d;
 }
 
 .hidden {
@@ -169,7 +160,6 @@ body {
 .cards-grid {
   columns: 4;
   column-gap: 2rem;
-  margin-top: 1rem;
 }
 
 .card {
@@ -239,6 +229,17 @@ body {
 
 .attribution a:hover {
   text-decoration: underline;
+}
+
+.tv-show-card img,
+.card img {
+  filter: contrast(80%) grayscale(30%);
+  transition: filter 0.5s ease;
+}
+
+.tv-show-card:hover img,
+.card:hover img {
+  filter: contrast(115%) grayscale(0);
 }
 
 /* Responsive Design */
