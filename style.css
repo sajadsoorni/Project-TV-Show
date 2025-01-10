@@ -82,23 +82,42 @@ body {
   background-color: white;
   font-size: 1rem;
   transition: box-shadow 0.3s ease;
+  outline: none;
+}
+
+#episode-search:focus {
+  box-shadow: 0 0 0 1px rgba(74, 144, 226, 0.5);
+  border-color: #4a90e2;
 }
 
 #episode-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   padding: 0.75rem 2.5rem 0.75rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
   color: #2d3748;
-
   background-color: #ffffff;
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease;
+  background-repeat: no-repeat;
   background-position: right 1rem top 50%;
+  background-size: 12px;
+}
+
+/* Optional: Style for focus state */
+#episode-selector:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
 }
 
 #show-selector {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   padding: 0.75rem 2.5rem 0.75rem 0.7rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
@@ -112,6 +131,11 @@ body {
   background-position: right 1rem top 50%;
 }
 
+#show-selector:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
 .back-button {
   padding: 0.8rem 1rem;
   background-color: #1a002dd5;
@@ -123,6 +147,7 @@ body {
   display: inline-block;
   white-space: nowrap;
   transition: all 0.2s ease;
+  background-position: right 1rem top 50%;
 }
 
 .back-button:hover {
