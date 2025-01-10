@@ -94,7 +94,7 @@ body {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
@@ -118,7 +118,7 @@ body {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  padding: 0.75rem 2.5rem 0.75rem 0.7rem;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
   border: 1px solid #e0e4e8;
   border-radius: 8px;
   font-size: 1rem;
