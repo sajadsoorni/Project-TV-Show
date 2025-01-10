@@ -179,11 +179,6 @@ const displayEpisodes = (episodes) => {
   // Clear both containers
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
-
-  // Hide shows container and show the episodes container
-  showContainer.style.display = "none";
-  cardsContainer.style.display = "block";
-
   // Display episodes
   episodes.forEach((episode) => {
     cardsContainer.appendChild(createEpisodeCard(episode));

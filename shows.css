@@ -4,7 +4,7 @@
   width: 100%;
   max-width: 1280px;
   background: white;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -52,7 +52,7 @@
 .tv-show-genres {
   color: #45aaf2;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -71,17 +71,17 @@
 
 .tv-show-summary {
   color: #4b6584;
-  font-size: 1.1rem;
-  line-height: 1.7;
+  font-size: 1rem;
+  line-height: 1.6;
   margin-top: 15px;
-  padding: 20px;
+  padding: 1rem;
   background: rgba(255, 255, 255, 0.7);
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
   flex-grow: 1;
   position: relative;
   overflow-y: auto;
-  max-height: 200px;
+  max-height: 13rem;
 }
 
 .tv-show-summary::-webkit-scrollbar {
@@ -96,16 +96,6 @@
 .tv-show-summary::-webkit-scrollbar-thumb {
   background: #4b6584;
   border-radius: 3px;
-}
-
-/* Container styles */
-.tv-shows-container {
-  padding: 30px;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
 }
 
 /* Responsive design */
