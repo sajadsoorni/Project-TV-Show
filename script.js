@@ -123,7 +123,6 @@ const showEpisodesListing = () => {
   // Update UI elements
   searchInput.placeholder = "Search episodes...";
   episodeSelector.classList.remove("hidden");
-  showSelector.classList.remove("hidden");
   searchInput.value = "";
 
   // Set up search handlers
