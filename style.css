@@ -183,11 +183,13 @@ body {
 
 /* The key changes for Pinterest-style layout */
 .cards-grid {
-  columns: 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   column-gap: 2rem;
 }
 
 .card {
+  position: relative;
   break-inside: avoid;
   margin-bottom: 2rem;
   background: white;
@@ -203,6 +205,10 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+.card .image-wrapper {
+  position: relative; /* This is important */
+}
+
 .card img {
   width: 100%;
   height: auto;
@@ -210,6 +216,24 @@ body {
   display: block;
 }
 
+.card .rating-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  bottom: 0; /* Changed from 300px to 0 */
+  left: 0;
+  width: 100%;
+  padding: 2rem 1rem 0.5rem 1rem;
+  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(253, 187, 45, 0) 100%);
+  color: white;
+  font-size: 1rem;
+}
+
+.stars {
+  color: gold;
+  font-size: 20px;
+}
 .card-content {
   padding: 1rem 0.8rem;
   position: relative;
@@ -227,18 +251,39 @@ body {
   font-weight: bold;
   margin-bottom: 1rem;
   padding: 0.25rem 0.5rem;
-  background-color: #1a002d8a;
+  background-color: #1a002dd5;
   border-radius: 4px;
   display: inline-block;
 }
 
-.card-content p {
+.paragraph {
   color: #5a5a5a;
   font-size: 0.9rem;
   line-height: 1.5;
   margin-top: 0.5rem;
+  max-height: 10rem;
+  position: relative;
+  padding: 0 1rem 1rem 0;
+  overflow-y: auto;
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 25px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 25px), transparent 100%);
 }
 
+.paragraph::-webkit-scrollbar {
+  width: 4px;
+}
+
+.paragraph::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.paragraph::-webkit-scrollbar-thumb {
+  background: #1a002d9d;
+  border-radius: 3px;
+}
+
+/* ---------------------------------------------------------- */
 .footer-container {
   text-align: center;
   margin-top: 2rem;
@@ -258,13 +303,13 @@ body {
 
 .tv-show-card img,
 .card img {
-  filter: contrast(80%) grayscale(30%);
+  filter: contrast(90%) grayscale(10%);
   transition: filter 0.5s ease;
 }
 
 .tv-show-card:hover img,
 .card:hover img {
-  filter: contrast(115%) grayscale(0);
+  filter: contrast(105%) grayscale(0);
 }
 
 /* Responsive Design */

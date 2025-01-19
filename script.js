@@ -28,10 +28,23 @@ const createEpisodeCard = (episode) => {
   const card = document.createElement("div");
   card.classList.add("card");
 
+  const imgWrapper = document.createElement("div");
+  imgWrapper.classList.add("image-wrapper");
+
   const img = document.createElement("img");
   img.src = episode.image?.medium || "placeholder.jpg";
   img.alt = episode.name;
   img.loading = "lazy";
+
+  const ratingInfo = document.createElement("div");
+  ratingInfo.classList.add("rating-info");
+
+  const airDate = document.createElement("span");
+  airDate.textContent = episode.airdate;
+
+  const rate = document.createElement("div");
+  rate.textContent = "★★★☆☆";
+  rate.classList.add("stars");
 
   const cardContent = document.createElement("div");
   cardContent.classList.add("card-content");
@@ -41,13 +54,16 @@ const createEpisodeCard = (episode) => {
   episodeNumber.textContent = formatEpisodeCode(episode.season, episode.number);
 
   const title = document.createElement("h2");
-  title.textContent = episode.name;
+  title.textContent = `episode.name`;
 
   const description = document.createElement("p");
+  description.classList.add("paragraph");
   description.innerHTML = episode.summary || "No description available.";
 
   cardContent.append(episodeNumber, title, description);
-  card.append(img, cardContent);
+  card.append(imgWrapper, cardContent);
+  imgWrapper.append(img, ratingInfo);
+  ratingInfo.append(airDate, rate);
 
   return card;
 };
@@ -317,7 +333,7 @@ const loadEpisodesForShow = async (showId) => {
   // Show loading state
   cardsContainer.innerHTML = "";
   showContainer.style.display = "none";
-  cardsContainer.style.display = "block";
+  cardsContainer.style.display = "grid";
 
   const loadingMessage = document.createElement("p");
   loadingMessage.id = "loading-message";

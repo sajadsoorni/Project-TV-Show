@@ -82,6 +82,8 @@
   position: relative;
   overflow-y: auto;
   max-height: 13rem;
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 30px), transparent 100%);
 }
 
 .tv-show-summary::-webkit-scrollbar {
