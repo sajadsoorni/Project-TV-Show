@@ -54,7 +54,7 @@ const createEpisodeCard = (episode) => {
   episodeNumber.textContent = formatEpisodeCode(episode.season, episode.number);
 
   const title = document.createElement("h2");
-  title.textContent = `episode.name`;
+  title.textContent = episode.name;
 
   const description = document.createElement("p");
   description.classList.add("paragraph");
