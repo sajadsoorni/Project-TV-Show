@@ -36,15 +36,39 @@ const createEpisodeCard = (episode) => {
   img.alt = episode.name;
   img.loading = "lazy";
 
-  const ratingInfo = document.createElement("div");
-  ratingInfo.classList.add("rating-info");
+  const dateAndTime = document.createElement("div");
+  dateAndTime.classList.add("date-and-time");
 
-  const airDate = document.createElement("span");
+  const timerIcon = document.createElement("img");
+  timerIcon.src = "img/timer.png";
+  timerIcon.alt = "Timer Icon";
+  timerIcon.style.width = "16px";
+  timerIcon.style.height = "16px";
+
+  const dateIcon = document.createElement("img");
+  dateIcon.src = "img/calendar.png";
+  dateIcon.alt = "Date Icon";
+  dateIcon.style.width = "16px";
+  dateIcon.style.height = "16px";
+
+  const airDate = document.createElement("div");
   airDate.textContent = episode.airdate;
+  airDate.classList.add("formatted-datetime");
 
-  const rate = document.createElement("div");
-  rate.textContent = "★★★☆☆";
-  rate.classList.add("stars");
+  const airTime = document.createElement("div");
+  airTime.textContent = episode.airtime;
+  airTime.classList.add("formatted-datetime");
+
+  // Safely handle icon errors
+  timerIcon.addEventListener("error", () => {
+    timerIcon.style.display = "none"; // Hide the broken icon
+    console.warn("Timer icon failed to load. Hiding it.");
+  });
+
+  dateIcon.addEventListener("error", () => {
+    dateIcon.style.display = "none"; // Hide the broken icon
+    console.warn("Date icon failed to load. Hiding it.");
+  });
 
   const cardContent = document.createElement("div");
   cardContent.classList.add("card-content");
@@ -62,8 +86,10 @@ const createEpisodeCard = (episode) => {
 
   cardContent.append(episodeNumber, title, description);
   card.append(imgWrapper, cardContent);
-  imgWrapper.append(img, ratingInfo);
-  ratingInfo.append(airDate, rate);
+  imgWrapper.append(img, dateAndTime);
+  dateAndTime.append(airDate, airTime);
+  airTime.appendChild(timerIcon);
+  airDate.appendChild(dateIcon);
 
   return card;
 };
