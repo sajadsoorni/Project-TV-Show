@@ -216,9 +216,10 @@ body {
   display: block;
 }
 
-.card .rating-info {
+.card .date-and-time {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
+  column-gap: 1rem;
   align-items: center;
   position: absolute;
   bottom: 0; /* Changed from 300px to 0 */
@@ -230,10 +231,14 @@ body {
   font-size: 1rem;
 }
 
-.stars {
-  color: gold;
-  font-size: 20px;
+.formatted-datetime {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  column-gap: 0.3rem;
+  flex-direction: row-reverse;
 }
+
 .card-content {
   padding: 1rem 0.8rem;
   position: relative;
