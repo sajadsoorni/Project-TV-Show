@@ -24,7 +24,7 @@ const formatEpisodeCode = (season, number) => {
 };
 
 // Create episode card
-const createEpisodeCard = (episode) => {
+const createEpisodeCard = (episode, useOriginalImage = false) => {
   const card = document.createElement("div");
   card.classList.add("card");
 
@@ -32,24 +32,34 @@ const createEpisodeCard = (episode) => {
   imgWrapper.classList.add("image-wrapper");
 
   const img = document.createElement("img");
-  img.src = episode.image?.medium || "placeholder.jpg";
+  const placeholderImageUrl = "https://placehold.co/600x400?text=Tv+Maze";
+  // Use original image if specified and available, otherwise fallback to medium or placeholder
+  img.src = useOriginalImage
+    ? episode.image?.original || episode.image?.medium || placeholderImageUrl
+    : episode.image?.medium || placeholderImageUrl;
   img.alt = episode.name;
   img.loading = "lazy";
 
   const dateAndTime = document.createElement("div");
   dateAndTime.classList.add("date-and-time");
 
-  const timerIcon = document.createElement("img");
-  timerIcon.src = "img/timer.png";
-  timerIcon.alt = "Timer Icon";
-  timerIcon.style.width = "16px";
-  timerIcon.style.height = "16px";
+  const clockIcon = document.createElement("img");
+  clockIcon.src = "img/clock.png";
+  clockIcon.alt = "clock Icon";
+  clockIcon.style.width = "10px";
+  clockIcon.style.height = "10px";
 
   const dateIcon = document.createElement("img");
   dateIcon.src = "img/calendar.png";
   dateIcon.alt = "Date Icon";
-  dateIcon.style.width = "16px";
-  dateIcon.style.height = "16px";
+  dateIcon.style.width = "10px";
+  dateIcon.style.height = "10px";
+
+  const runtimeIcon = document.createElement("img");
+  runtimeIcon.src = "img/runtime.png";
+  runtimeIcon.alt = "Date Icon";
+  runtimeIcon.style.width = "10px";
+  runtimeIcon.style.height = "10px";
 
   const airDate = document.createElement("div");
   airDate.textContent = episode.airdate;
@@ -59,14 +69,23 @@ const createEpisodeCard = (episode) => {
   airTime.textContent = episode.airtime;
   airTime.classList.add("formatted-datetime");
 
+  const runTime = document.createElement("div");
+  runTime.textContent = `${episode.runtime} minutes`;
+  runTime.classList.add("formatted-datetime");
+
   // Safely handle icon errors
-  timerIcon.addEventListener("error", () => {
-    timerIcon.style.display = "none"; // Hide the broken icon
+  clockIcon.addEventListener("error", () => {
+    clockIcon.style.display = "none";
     console.warn("Timer icon failed to load. Hiding it.");
   });
 
   dateIcon.addEventListener("error", () => {
-    dateIcon.style.display = "none"; // Hide the broken icon
+    dateIcon.style.display = "none";
+    console.warn("Date icon failed to load. Hiding it.");
+  });
+
+  runtimeIcon.addEventListener("error", () => {
+    runtimeIcon.style.display = "none";
     console.warn("Date icon failed to load. Hiding it.");
   });
 
@@ -87,9 +106,10 @@ const createEpisodeCard = (episode) => {
   cardContent.append(episodeNumber, title, description);
   card.append(imgWrapper, cardContent);
   imgWrapper.append(img, dateAndTime);
-  dateAndTime.append(airDate, airTime);
-  airTime.appendChild(timerIcon);
+  dateAndTime.append(airDate, airTime, runTime);
+  airTime.appendChild(clockIcon);
   airDate.appendChild(dateIcon);
+  runTime.appendChild(runtimeIcon);
 
   return card;
 };
@@ -113,7 +133,6 @@ const createShowCard = (show) => {
   title.classList.add("tv-show-title");
   title.addEventListener("click", () => {
     mainHeader.textContent = show.name;
-
     loadEpisodesForShow(show.id);
   });
 
@@ -216,13 +235,14 @@ const displayShows = (shows) => {
 };
 
 // Display episodes
-const displayEpisodes = (episodes) => {
+const displayEpisodes = (episodes, useOriginalImage = false) => {
   // Clear both containers
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
+
   // Display episodes
   episodes.forEach((episode) => {
-    cardsContainer.appendChild(createEpisodeCard(episode));
+    cardsContainer.appendChild(createEpisodeCard(episode, useOriginalImage));
   });
 
   // Update episode count and add back button
@@ -317,8 +337,10 @@ const handleEpisodeSelection = (event) => {
 
   if (selectedEpisodeId) {
     const selectedEpisode = allEpisodes.find((episode) => episode.id === parseInt(selectedEpisodeId, 10));
-    displayEpisodes(selectedEpisode ? [selectedEpisode] : []);
+    // Pass true as the second argument to use original image size when displaying a single episode
+    displayEpisodes(selectedEpisode ? [selectedEpisode] : [], true);
   } else {
+    // Use default medium size images when showing all episodes
     displayEpisodes(allEpisodes);
   }
 };

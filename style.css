@@ -219,16 +219,18 @@ body {
 .card .date-and-time {
   display: flex;
   justify-content: start;
-  column-gap: 1rem;
-  align-items: center;
+  justify-self: end;
+  align-items: flex-end;
+  column-gap: 0.3rem;
   position: absolute;
-  bottom: 0; /* Changed from 300px to 0 */
+  bottom: 0;
   left: 0;
   width: 100%;
-  padding: 2rem 1rem 0.5rem 1rem;
-  background: linear-gradient(0deg, rgb(0, 0, 0) 0%, rgba(253, 187, 45, 0) 100%);
-  color: white;
-  font-size: 1rem;
+  height: 5rem;
+  padding: 1rem 1rem 0.5rem 1rem;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.614) 0%, rgba(253, 187, 45, 0) 100%);
+  color: #fff;
+  font-size: 0.7rem;
 }
 
 .formatted-datetime {
