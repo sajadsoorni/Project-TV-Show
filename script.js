@@ -15,6 +15,77 @@ const searchInput = document.getElementById("episode-search");
 const episodeSelector = document.getElementById("episode-selector");
 const showSelector = document.getElementById("show-selector");
 const mainHeader = document.querySelector(".main-header h1");
+const breadcrumbContainer = document.querySelector(".nav-breadcrumb");
+const breadcrumbList = document.querySelector(".breadcrumb");
+
+// Helper function to create separator
+const createSeparator = () => {
+  const separator = document.createElement("li");
+  separator.textContent = "/";
+  return separator;
+};
+
+// Helper function to create breadcrumb items
+const createBreadcrumbItem = (text, clickHandler = null) => {
+  const li = document.createElement("li");
+
+  if (clickHandler) {
+    const span = document.createElement("span");
+    span.textContent = text;
+    span.style.cursor = "pointer";
+    span.classList.add("breadcrumb-link");
+    span.addEventListener("click", clickHandler);
+    li.appendChild(span);
+  } else {
+    li.textContent = text;
+  }
+
+  return li;
+};
+
+// Function to update breadcrumb
+const updateBreadcrumb = (show = null, episode = null) => {
+  // Clear existing breadcrumb items
+  breadcrumbList.innerHTML = "";
+
+  // Hide breadcrumb if no show is selected
+  if (!show) {
+    breadcrumbContainer.style.display = "none";
+    return;
+  }
+
+  breadcrumbContainer.style.display = "block";
+
+  // Add "Shows" item with proper event handling
+  const showsItem = createBreadcrumbItem("Shows", () => {
+    showSelector.value = ""; // Reset show selector
+    showShowsListing();
+    updateBreadcrumb(); // Clear breadcrumb
+  });
+  breadcrumbList.appendChild(showsItem);
+
+  // Add separator
+  breadcrumbList.appendChild(createSeparator());
+
+  // Add show name
+  const showItem = createBreadcrumbItem(show.name, () => {
+    if (currentShowId !== show.id) {
+      loadEpisodesForShow(show.id);
+    }
+    displayEpisodes(allEpisodes);
+    showSelector.value = show.id;
+    updateBreadcrumb(show); // Update breadcrumb without episode
+  });
+  breadcrumbList.appendChild(showItem);
+
+  // Add episode if selected
+  if (episode) {
+    breadcrumbList.appendChild(createSeparator());
+    const episodeText = `${formatEpisodeCode(episode.season, episode.number)} - ${episode.name}`;
+    const episodeItem = createBreadcrumbItem(episodeText);
+    breadcrumbList.appendChild(episodeItem);
+  }
+};
 
 // Helper function to format episode codes
 const formatEpisodeCode = (season, number) => {
@@ -30,9 +101,9 @@ const createEpisodeCard = (episode) => {
 
   const imgWrapper = document.createElement("div");
   imgWrapper.classList.add("image-wrapper");
-
+  const placeholderImageUrl = `https://placehold.co/250x140?text=${formatEpisodeCode(episode.season, episode.number)}`;
   const img = document.createElement("img");
-  img.src = episode.image?.medium || "placeholder.jpg";
+  img.src = episode.image?.medium || placeholderImageUrl;
   img.alt = episode.name;
   img.loading = "lazy";
 
@@ -69,14 +140,13 @@ const createEpisodeCard = (episode) => {
   runTime.textContent = `${episode.runtime} minutes`;
   runTime.classList.add("formatted-datetime");
 
-  // Safely handle icon errors
   clockIcon.addEventListener("error", () => {
-    clockIcon.style.display = "none"; // Hide the broken icon
+    clockIcon.style.display = "none";
     console.warn("Timer icon failed to load. Hiding it.");
   });
 
   dateIcon.addEventListener("error", () => {
-    dateIcon.style.display = "none"; // Hide the broken icon
+    dateIcon.style.display = "none";
     console.warn("Date icon failed to load. Hiding it.");
   });
 
@@ -124,7 +194,7 @@ const createShowCard = (show) => {
   title.classList.add("tv-show-title");
   title.addEventListener("click", () => {
     mainHeader.textContent = show.name;
-
+    updateBreadcrumb(show);
     loadEpisodesForShow(show.id);
   });
 
@@ -165,6 +235,9 @@ const showShowsListing = () => {
   showSelector.classList.remove("hidden");
   searchInput.value = "";
 
+  // Clear breadcrumb
+  updateBreadcrumb();
+
   // Display shows and set up search
   displayShows(cache.shows);
   searchInput.removeEventListener("input", handleSearch);
@@ -173,12 +246,10 @@ const showShowsListing = () => {
 
 // Episode listing view
 const showEpisodesListing = () => {
-  // Update UI elements
   searchInput.placeholder = "Search episodes...";
   episodeSelector.classList.remove("hidden");
   searchInput.value = "";
 
-  // Set up search handlers
   searchInput.removeEventListener("input", handleShowSearch);
   searchInput.addEventListener("input", handleSearch);
 };
@@ -206,21 +277,17 @@ const filterShows = (shows, searchTerm) => {
 
 // Display shows
 const displayShows = (shows) => {
-  // Clear both containers
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
 
-  // Hide episodes container and show the shows container
   cardsContainer.style.display = "none";
   showContainer.style.display = "block";
 
-  // Remove episode count and back button if they exist
   const existingCount = document.getElementById("episode-count");
   const existingButton = document.getElementById("back-button");
   if (existingCount) existingCount.remove();
   if (existingButton) existingButton.remove();
 
-  // Display shows
   shows.forEach((show) => {
     showContainer.appendChild(createShowCard(show));
   });
@@ -228,41 +295,27 @@ const displayShows = (shows) => {
 
 // Display episodes
 const displayEpisodes = (episodes) => {
-  // Clear both containers
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
-  // Display episodes
+  cardsContainer.style.display = "grid";
+  showContainer.style.display = "none";
+
   episodes.forEach((episode) => {
     cardsContainer.appendChild(createEpisodeCard(episode));
   });
 
-  // Update episode count and add back button
-  const searchWrapper = document.querySelector(".search-wrapper");
+  // const searchWrapper = document.querySelector(".search-wrapper");
 
-  // Remove any existing episode count and back button
   const existingCount = document.getElementById("episode-count");
   const existingButton = document.getElementById("back-button");
   if (existingCount) existingCount.remove();
   if (existingButton) existingButton.remove();
 
-  // Create episode count
   const countDisplay = document.createElement("div");
   countDisplay.id = "episode-count";
   countDisplay.textContent = `${episodes.length} / ${allEpisodes.length} episodes`;
 
-  // Create back button
-  const backButton = document.createElement("button");
-  backButton.id = "back-button";
-  backButton.textContent = "Back to Shows";
-  backButton.classList.add("back-button");
-  backButton.addEventListener("click", () => {
-    showSelector.value = ""; // Reset show selector
-    showShowsListing(); // Go back to shows listing
-  });
-
-  // Add both elements to search wrapper
-  searchWrapper.appendChild(countDisplay);
-  searchWrapper.appendChild(backButton);
+  breadcrumbList.appendChild(countDisplay);
 };
 
 // Populate episode selector
@@ -279,31 +332,23 @@ const populateEpisodeSelector = (episodes) => {
 
 // Populate show selector
 const populateShowSelector = (shows) => {
-  // Clear existing options
   showSelector.innerHTML = "<option value=''>Select Show</option>";
 
-  // Get unique genres from all shows
   const allGenres = [...new Set(shows.flatMap((show) => show.genres))].sort();
-
-  // Create a map to store shows by genre
   const showsByGenre = new Map();
 
-  // Initialize genre groups
   allGenres.forEach((genre) => {
     showsByGenre.set(genre, []);
   });
 
-  // Sort shows by name and group them by genre
   const sortedShows = [...shows].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
 
-  // Add shows to their respective genre groups
   sortedShows.forEach((show) => {
     show.genres.forEach((genre) => {
       showsByGenre.get(genre).push(show);
     });
   });
 
-  // Create optgroups for each genre and add shows
   allGenres.forEach((genre) => {
     const showsInGenre = showsByGenre.get(genre);
     if (showsInGenre.length > 0) {
@@ -325,12 +370,15 @@ const populateShowSelector = (shows) => {
 // Handle episode selection
 const handleEpisodeSelection = (event) => {
   const selectedEpisodeId = event.target.value;
+  const selectedShow = cache.shows.find((show) => show.id === parseInt(currentShowId));
 
   if (selectedEpisodeId) {
     const selectedEpisode = allEpisodes.find((episode) => episode.id === parseInt(selectedEpisodeId, 10));
     displayEpisodes(selectedEpisode ? [selectedEpisode] : []);
+    updateBreadcrumb(selectedShow, selectedEpisode);
   } else {
     displayEpisodes(allEpisodes);
+    updateBreadcrumb(selectedShow);
   }
 };
 
@@ -338,10 +386,9 @@ const handleEpisodeSelection = (event) => {
 const handleShowSelection = (event) => {
   const selectedShowId = event.target.value;
   if (selectedShowId) {
-    // Update the header with selected show name
     const selectedShow = cache.shows.find((show) => show.id === parseInt(selectedShowId));
     mainHeader.textContent = selectedShow.name;
-
+    updateBreadcrumb(selectedShow);
     loadEpisodesForShow(selectedShowId);
   } else {
     showShowsListing();
@@ -367,7 +414,6 @@ const loadEpisodesForShow = async (showId) => {
   if (showId === currentShowId) return;
   currentShowId = showId;
 
-  // Show loading state
   cardsContainer.innerHTML = "";
   showContainer.style.display = "none";
   cardsContainer.style.display = "grid";
@@ -378,16 +424,16 @@ const loadEpisodesForShow = async (showId) => {
   cardsContainer.appendChild(loadingMessage);
 
   try {
-    // Check cache first
     if (cache.episodes.has(showId)) {
       allEpisodes = cache.episodes.get(showId);
+      const selectedShow = cache.shows.find((show) => show.id === parseInt(showId));
       displayEpisodes(allEpisodes);
       populateEpisodeSelector(allEpisodes);
       showEpisodesListing();
+      updateBreadcrumb(selectedShow);
       return;
     }
 
-    // Fetch episodes if not in cache
     const response = await fetch(`https://api.tvmaze.com/shows/${showId}/episodes`);
     if (!response.ok) throw new Error(`Failed to fetch episodes: ${response.statusText}`);
 

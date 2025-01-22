@@ -28,6 +28,35 @@ body {
   flex-wrap: wrap;
 }
 
+.nav-breadcrumb {
+  margin-bottom: 2rem;
+}
+
+ul.breadcrumb {
+  padding: 10px 12px;
+  list-style: none;
+  background-color: #fff;
+  margin-top: 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+}
+
+ul.breadcrumb li {
+  display: inline;
+  font-size: 1rem;
+  margin: 0 5px;
+}
+
+ul.breadcrumb li span {
+  color: #0275d8;
+  text-decoration: none;
+  cursor: pointer;
+}
+ul.breadcrumb li span:hover {
+  color: #01447e;
+}
+
 .main-header .container {
   width: 1280px;
 }
@@ -38,7 +67,7 @@ body {
 
 /* Search Bar Styles */
 .search-container {
-  margin: 1rem auto;
+  margin: 0 auto;
   max-width: 1280px;
 }
 
@@ -59,13 +88,14 @@ body {
 }
 
 #episode-count {
-  color: #000000;
+  color: #5a5a5a;
   text-align: center;
   font-size: 1rem;
   white-space: nowrap;
-  padding: 0.6rem 0.6rem 0.6rem 0.6rem;
-  border-radius: 8px;
-  border: 1px solid #e0e4e8;
+  padding: 0 1rem;
+  transition: all 0.2s ease;
+  margin-left: 2rem;
+  border-left: 1px solid #a9a9a9;
   transition: all 0.2s ease;
 }
 
@@ -331,6 +361,10 @@ body {
     padding: 0 1rem;
   }
 
+  .nav-breadcrumb {
+    padding: 0 1rem;
+  }
+
   .search-container .container {
     padding: 1rem 0rem;
   }
@@ -376,11 +410,6 @@ body {
     width: 100%;
   }
 
-  #episode-count {
-    margin-top: 1rem;
-    width: 9rem;
-    text-align: center;
-  }
   .search-container .container {
     padding: 1rem 0rem;
   }
