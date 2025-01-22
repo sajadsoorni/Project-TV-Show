@@ -24,7 +24,7 @@ const formatEpisodeCode = (season, number) => {
 };
 
 // Create episode card
-const createEpisodeCard = (episode, useOriginalImage = false) => {
+const createEpisodeCard = (episode) => {
   const card = document.createElement("div");
   card.classList.add("card");
 
@@ -32,11 +32,7 @@ const createEpisodeCard = (episode, useOriginalImage = false) => {
   imgWrapper.classList.add("image-wrapper");
 
   const img = document.createElement("img");
-  const placeholderImageUrl = "https://placehold.co/600x400?text=Tv+Maze";
-  // Use original image if specified and available, otherwise fallback to medium or placeholder
-  img.src = useOriginalImage
-    ? episode.image?.original || episode.image?.medium || placeholderImageUrl
-    : episode.image?.medium || placeholderImageUrl;
+  img.src = episode.image?.medium || "placeholder.jpg";
   img.alt = episode.name;
   img.loading = "lazy";
 
@@ -45,7 +41,7 @@ const createEpisodeCard = (episode, useOriginalImage = false) => {
 
   const clockIcon = document.createElement("img");
   clockIcon.src = "img/clock.png";
-  clockIcon.alt = "clock Icon";
+  clockIcon.alt = "Timer Icon";
   clockIcon.style.width = "10px";
   clockIcon.style.height = "10px";
 
@@ -75,17 +71,12 @@ const createEpisodeCard = (episode, useOriginalImage = false) => {
 
   // Safely handle icon errors
   clockIcon.addEventListener("error", () => {
-    clockIcon.style.display = "none";
+    clockIcon.style.display = "none"; // Hide the broken icon
     console.warn("Timer icon failed to load. Hiding it.");
   });
 
   dateIcon.addEventListener("error", () => {
-    dateIcon.style.display = "none";
-    console.warn("Date icon failed to load. Hiding it.");
-  });
-
-  runtimeIcon.addEventListener("error", () => {
-    runtimeIcon.style.display = "none";
+    dateIcon.style.display = "none"; // Hide the broken icon
     console.warn("Date icon failed to load. Hiding it.");
   });
 
@@ -133,6 +124,7 @@ const createShowCard = (show) => {
   title.classList.add("tv-show-title");
   title.addEventListener("click", () => {
     mainHeader.textContent = show.name;
+
     loadEpisodesForShow(show.id);
   });
 
@@ -235,14 +227,13 @@ const displayShows = (shows) => {
 };
 
 // Display episodes
-const displayEpisodes = (episodes, useOriginalImage = false) => {
+const displayEpisodes = (episodes) => {
   // Clear both containers
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
-
   // Display episodes
   episodes.forEach((episode) => {
-    cardsContainer.appendChild(createEpisodeCard(episode, useOriginalImage));
+    cardsContainer.appendChild(createEpisodeCard(episode));
   });
 
   // Update episode count and add back button
@@ -337,10 +328,8 @@ const handleEpisodeSelection = (event) => {
 
   if (selectedEpisodeId) {
     const selectedEpisode = allEpisodes.find((episode) => episode.id === parseInt(selectedEpisodeId, 10));
-    // Pass true as the second argument to use original image size when displaying a single episode
-    displayEpisodes(selectedEpisode ? [selectedEpisode] : [], true);
+    displayEpisodes(selectedEpisode ? [selectedEpisode] : []);
   } else {
-    // Use default medium size images when showing all episodes
     displayEpisodes(allEpisodes);
   }
 };
