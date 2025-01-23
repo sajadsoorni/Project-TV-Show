@@ -318,7 +318,7 @@ const displayEpisodes = (episodes) => {
 
   const countDisplay = document.createElement("div");
   countDisplay.id = "episode-count";
-  countDisplay.textContent = `${episodes.length} / ${allEpisodes.length} episodes`;
+  countDisplay.textContent = `${episodes.length} / ${allEpisodes.length} e`;
 
   breadcrumbList.appendChild(countDisplay);
 };
