@@ -39,6 +39,7 @@ ul.breadcrumb {
   margin-top: 1rem;
   border-radius: 8px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
