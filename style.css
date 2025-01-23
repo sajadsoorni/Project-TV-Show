@@ -46,6 +46,7 @@ ul.breadcrumb {
 ul.breadcrumb li {
   display: inline;
   font-size: 1rem;
+  white-space: ;
   margin: 0 5px;
 }
 
@@ -88,15 +89,15 @@ ul.breadcrumb li span:hover {
 }
 
 #episode-count {
-  color: #5a5a5a;
+  color: #fff;
   text-align: center;
-  font-size: 1rem;
   white-space: nowrap;
-  padding: 0 1rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
   transition: all 0.2s ease;
-  margin-left: 2rem;
-  border-left: 1px solid #a9a9a9;
-  transition: all 0.2s ease;
+  background-color: #45aaf2;
+  margin-left: 5px;
+  font-size: 10px;
 }
 
 #episode-search {
@@ -353,9 +354,6 @@ ul.breadcrumb li span:hover {
   .cards-grid {
     padding-top: 0;
   }
-  #episode-count {
-    font-size: 15px;
-  }
 
   .search-wrapper {
     padding: 0 1rem;
@@ -376,7 +374,6 @@ ul.breadcrumb li span:hover {
 
 @media (max-width: 600px) {
   .main-header {
-    height: 80px;
     min-height: 80px;
   }
 
@@ -433,5 +430,14 @@ ul.breadcrumb li span:hover {
 
   .back-button {
     margin-top: 1rem;
+  }
+
+  ul.breadcrumb li {
+    font-size: 0.9rem;
+  }
+
+  #episode-count {
+    margin-top: 1rem;
+    width: 100%;
   }
 }
