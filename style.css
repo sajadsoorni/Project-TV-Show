@@ -427,12 +427,4 @@ ul.breadcrumb li span:hover {
   .container {
     padding: 1rem;
   }
-
-  .back-button {
-    margin-top: 1rem;
-  }
-
-  #episode-count {
-    margin-top: 1rem;
-  }
 }
