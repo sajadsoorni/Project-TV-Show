@@ -432,12 +432,7 @@ ul.breadcrumb li span:hover {
     margin-top: 1rem;
   }
 
-  ul.breadcrumb li {
-    font-size: 0.9rem;
-  }
-
   #episode-count {
     margin-top: 1rem;
-    width: 100%;
   }
 }
