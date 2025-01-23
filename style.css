@@ -51,7 +51,6 @@ ul.breadcrumb li {
 ul.breadcrumb li span {
   color: #0275d8;
   text-decoration: none;
-  cursor: pointer;
 }
 ul.breadcrumb li span:hover {
   color: #01447e;
