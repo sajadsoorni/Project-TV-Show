@@ -56,7 +56,7 @@ const updateBreadcrumb = (show = null, episode = null) => {
 
   breadcrumbContainer.style.display = "block";
 
-  // Add "Shows" item with proper event handling
+  // Always make "Shows" clickable as it's never the final item
   const showsItem = createBreadcrumbItem("Shows", () => {
     showSelector.value = ""; // Reset show selector
     showShowsListing();
@@ -67,15 +67,20 @@ const updateBreadcrumb = (show = null, episode = null) => {
   // Add separator
   breadcrumbList.appendChild(createSeparator());
 
-  // Add show name
-  const showItem = createBreadcrumbItem(show.name, () => {
-    if (currentShowId !== show.id) {
-      loadEpisodesForShow(show.id);
-    }
-    displayEpisodes(allEpisodes);
-    showSelector.value = show.id;
-    updateBreadcrumb(show); // Update breadcrumb without episode
-  });
+  // Add show name - only make it clickable if there's an episode selected
+  const showItem = createBreadcrumbItem(
+    show.name,
+    episode
+      ? () => {
+          if (currentShowId !== show.id) {
+            loadEpisodesForShow(show.id);
+          }
+          displayEpisodes(allEpisodes);
+          showSelector.value = show.id;
+          updateBreadcrumb(show); // Update breadcrumb without episode
+        }
+      : null
+  );
   breadcrumbList.appendChild(showItem);
 
   // Add episode if selected
