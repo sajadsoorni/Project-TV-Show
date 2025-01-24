@@ -396,7 +396,7 @@ const displayShows = (shows) => {
   cardsContainer.innerHTML = "";
 
   cardsContainer.style.display = "none";
-  showContainer.style.display = "grid";
+  showContainer.style.display = "flex";
 
   const existingCount = document.getElementById("episode-count");
   const existingButton = document.getElementById("back-button");
@@ -412,7 +412,7 @@ const displayShows = (shows) => {
 const displayEpisodes = (episodes) => {
   showContainer.innerHTML = "";
   cardsContainer.innerHTML = "";
-  cardsContainer.style.display = "grid";
+  cardsContainer.style.display = "flex";
   showContainer.style.display = "none";
 
   episodes.forEach((episode) => {
