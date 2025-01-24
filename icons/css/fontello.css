@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'fontello';
-  src: url('../font/fontello.eot?199054');
-  src: url('../font/fontello.eot?199054#iefix') format('embedded-opentype'),
-       url('../font/fontello.woff2?199054') format('woff2'),
-       url('../font/fontello.woff?199054') format('woff'),
-       url('../font/fontello.ttf?199054') format('truetype'),
-       url('../font/fontello.svg?199054#fontello') format('svg');
+  src: url('../font/fontello.eot?42956579');
+  src: url('../font/fontello.eot?42956579#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff2?42956579') format('woff2'),
+       url('../font/fontello.woff?42956579') format('woff'),
+       url('../font/fontello.ttf?42956579') format('truetype'),
+       url('../font/fontello.svg?42956579#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?199054#fontello') format('svg');
+    src: url('../font/fontello.svg?42956579#fontello') format('svg');
   }
 }
 */
@@ -72,10 +72,16 @@
 .sajad-iconstopwatch:before { content: '\e80f'; } /* '' */
 .sajad-icontag:before { content: '\e810'; } /* '' */
 .sajad-iconexclamation:before { content: '\e811'; } /* '' */
+.sajad-iconstar:before { content: '\e812'; } /* '' */
+.sajad-iconstar-empty:before { content: '\e813'; } /* '' */
+.sajad-iconstar-half:before { content: '\e814'; } /* '' */
+.sajad-iconstar-1:before { content: '\e815'; } /* '' */
+.sajad-iconstar-2:before { content: '\e816'; } /* '' */
 .sajad-iconmenu-2:before { content: '\f008'; } /* '' */
 .sajad-iconlink-1:before { content: '\f07b'; } /* '' */
 .sajad-iconmenu:before { content: '\f0c9'; } /* '' */
 .sajad-iconmail-alt:before { content: '\f0e0'; } /* '' */
+.sajad-iconstar-half-alt:before { content: '\f123'; } /* '' */
 .sajad-iconcalendar-empty:before { content: '\f133'; } /* '' */
 .sajad-iconlinkedin-rect:before { content: '\f312'; } /* '' */
 .sajad-iconlinkedin-1:before { content: '\f318'; } /* '' */

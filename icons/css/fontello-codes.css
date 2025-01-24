@@ -17,10 +17,16 @@
 .sajad-iconstopwatch:before { content: '\e80f'; } /* '' */
 .sajad-icontag:before { content: '\e810'; } /* '' */
 .sajad-iconexclamation:before { content: '\e811'; } /* '' */
+.sajad-iconstar:before { content: '\e812'; } /* '' */
+.sajad-iconstar-empty:before { content: '\e813'; } /* '' */
+.sajad-iconstar-half:before { content: '\e814'; } /* '' */
+.sajad-iconstar-1:before { content: '\e815'; } /* '' */
+.sajad-iconstar-2:before { content: '\e816'; } /* '' */
 .sajad-iconmenu-2:before { content: '\f008'; } /* '' */
 .sajad-iconlink-1:before { content: '\f07b'; } /* '' */
 .sajad-iconmenu:before { content: '\f0c9'; } /* '' */
 .sajad-iconmail-alt:before { content: '\f0e0'; } /* '' */
+.sajad-iconstar-half-alt:before { content: '\f123'; } /* '' */
 .sajad-iconcalendar-empty:before { content: '\f133'; } /* '' */
 .sajad-iconlinkedin-rect:before { content: '\f312'; } /* '' */
 .sajad-iconlinkedin-1:before { content: '\f318'; } /* '' */
