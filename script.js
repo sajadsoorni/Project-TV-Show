@@ -105,7 +105,7 @@ const createEpisodeCard = (episode) => {
   card.classList.add("card");
 
   const imgWrapper = document.createElement("div");
-  imgWrapper.classList.add("image-wrapper");
+  imgWrapper.classList.add("episode-image-wrapper");
   const placeholderImageUrl = `https://placehold.co/250x140?text=${formatEpisodeCode(episode.season, episode.number)}`;
   const img = document.createElement("img");
   img.src = episode.image?.medium || placeholderImageUrl;
@@ -115,23 +115,17 @@ const createEpisodeCard = (episode) => {
   const dateAndTime = document.createElement("div");
   dateAndTime.classList.add("date-and-time");
 
-  const clockIcon = document.createElement("img");
-  clockIcon.src = "img/clock.png";
-  clockIcon.alt = "Timer Icon";
-  clockIcon.style.width = "10px";
-  clockIcon.style.height = "10px";
+  const clockIcon = document.createElement("li");
+  clockIcon.classList.add("sajad-iconclock");
+  clockIcon.style.listStyle = "none";
 
-  const dateIcon = document.createElement("img");
-  dateIcon.src = "img/calendar.png";
-  dateIcon.alt = "Date Icon";
-  dateIcon.style.width = "10px";
-  dateIcon.style.height = "10px";
+  const dateIcon = document.createElement("li");
+  dateIcon.classList.add("sajad-iconcalendar-1");
+  dateIcon.style.listStyle = "none";
 
-  const runtimeIcon = document.createElement("img");
-  runtimeIcon.src = "img/runtime.png";
-  runtimeIcon.alt = "Date Icon";
-  runtimeIcon.style.width = "10px";
-  runtimeIcon.style.height = "10px";
+  const runtimeIcon = document.createElement("li");
+  runtimeIcon.classList.add("sajad-iconstopwatch");
+  runtimeIcon.style.listStyle = "none";
 
   const airDate = document.createElement("div");
   airDate.textContent = episode.airdate;
@@ -156,7 +150,7 @@ const createEpisodeCard = (episode) => {
   });
 
   const cardContent = document.createElement("div");
-  cardContent.classList.add("card-content");
+  cardContent.classList.add("episode-card-content");
 
   const episodeNumber = document.createElement("div");
   episodeNumber.classList.add("episode-number");
@@ -180,6 +174,10 @@ const createEpisodeCard = (episode) => {
   return card;
 };
 
+const filterShowsByGenre = (genre) => {
+  return cache.shows.filter((show) => show.genres.includes(genre));
+};
+
 // Create show card
 const createShowCard = (show) => {
   const card = document.createElement("div");
@@ -196,6 +194,7 @@ const createShowCard = (show) => {
 
   const title = document.createElement("h2");
   title.textContent = show.name;
+  title.style.width = "fit-content";
   title.classList.add("tv-show-title");
   title.addEventListener("click", () => {
     mainHeader.textContent = show.name;
@@ -203,14 +202,42 @@ const createShowCard = (show) => {
     loadEpisodesForShow(show.id);
   });
 
-  const genres = document.createElement("p");
+  img.addEventListener("click", () => {
+    mainHeader.textContent = show.name;
+    updateBreadcrumb(show);
+    loadEpisodesForShow(show.id);
+  });
+
+  const genres = document.createElement("div");
   genres.classList.add("tv-show-genres");
-  genres.textContent = `Genres: ${show.genres.join(", ")}`;
+  const tagIcon = document.createElement("li");
+  tagIcon.classList.add("sajad-icontag");
+
+  // Create clickable genre spans
+  const genreSpans = show.genres.map((genre) => {
+    const genreSpan = document.createElement("span");
+    genreSpan.textContent = genre;
+    genreSpan.classList.add("genre-tag");
+    genreSpan.style.cursor = "pointer";
+
+    genreSpan.addEventListener("click", () => {
+      const filteredShows = filterShowsByGenre(genre);
+      displayShows(filteredShows);
+      mainHeader.textContent = `${genre} Shows`;
+    });
+
+    return genreSpan;
+  });
+
+  // Join genre spans with comma
+  genres.append(
+    tagIcon,
+    ...genreSpans.flatMap((span, index) => (index > 0 ? [document.createTextNode(" | "), span] : [span]))
+  );
 
   const status = document.createElement("p");
   status.classList.add("tv-show-status");
   status.textContent = `Status: ${show.status}`;
-
   const rating = document.createElement("p");
   rating.classList.add("tv-show-rating");
   rating.textContent = `Rating: ${show.rating.average || "N/A"}`;
@@ -225,7 +252,6 @@ const createShowCard = (show) => {
 
   content.append(title, genres, status, rating, runtime, summary);
   card.append(img, content);
-
   return card;
 };
 
@@ -286,7 +312,7 @@ const displayShows = (shows) => {
   cardsContainer.innerHTML = "";
 
   cardsContainer.style.display = "none";
-  showContainer.style.display = "block";
+  showContainer.style.display = "grid";
 
   const existingCount = document.getElementById("episode-count");
   const existingButton = document.getElementById("back-button");
