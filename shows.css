@@ -5,6 +5,7 @@
   column-gap: 1rem;
 }
 .tv-show-card {
+  max-width: 300px;
   position: relative;
   break-inside: avoid;
   background: white;
@@ -199,11 +200,17 @@
 /* Responsive design */
 
 @media (max-width: 1200px) {
+  .tv-show-card {
+    max-width: 25rem;
+  }
   .tv-shows {
     columns: 3;
   }
 }
 @media (max-width: 900px) {
+  .tv-show-card {
+    max-width: 25rem;
+  }
   .tv-shows {
     columns: 2;
   }
@@ -227,6 +234,9 @@
 }
 
 @media (max-width: 600px) {
+  .tv-show-card {
+    max-width: 100%;
+  }
   .tv-shows {
     columns: 1;
   }
@@ -241,5 +251,10 @@
 
   .tv-show-title {
     font-size: 1.5rem;
+  }
+
+  .full-rating-container {
+    justify-content: start;
+    padding: 1rem 1rem 0.2rem;
   }
 }
