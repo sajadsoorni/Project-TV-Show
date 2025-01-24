@@ -234,7 +234,7 @@ ul.breadcrumb li span:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-.card .episode-image-wrapper {
+.episode-image-wrapper {
   position: relative; /* This is important */
 }
 
@@ -245,7 +245,7 @@ ul.breadcrumb li span:hover {
   display: block;
 }
 
-.card .date-and-time {
+.date-and-time {
   display: flex;
   justify-content: start;
   justify-self: end;
