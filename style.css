@@ -211,13 +211,15 @@ ul.breadcrumb li span:hover {
 }
 
 /* The key changes for Pinterest-style layout */
-.cards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  column-gap: 2rem;
+.cards-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
 .card {
+  flex: 1 1 250px;
+  max-width: 400px;
   position: relative;
   break-inside: avoid;
   margin-bottom: 2rem;
@@ -356,13 +358,12 @@ a:hover {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
+  .paragraph {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 900px) {
-  .cards-grid {
-    padding-top: 0;
-  }
-
   .search-wrapper {
     padding: 0 1rem;
   }
@@ -378,17 +379,17 @@ a:hover {
   .container {
     padding: 1rem;
   }
+
+  .paragraph {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 600px) {
-  .main-header {
-    min-height: 80px;
+  .card {
+    flex: 1 1 250px; /* Flex-grow, flex-shrink, flex-basis */
+    max-width: 100%;
   }
-
-  .main-header .container {
-    padding: 1rem;
-  }
-
   .main-header h1 {
     font-size: 1.5rem;
   }
@@ -398,25 +399,8 @@ a:hover {
     align-items: flex-start;
   }
 
-  .header-attribution {
-    font-size: 0.8rem;
-  }
-
-  .search-container {
-    top: 80px;
-  }
-
-  .search-wrapper {
-    display: block;
-    padding: 0 1rem;
-  }
-
   #episode-search {
     width: 100%;
-  }
-
-  .search-container .container {
-    padding: 1rem 0rem;
   }
 
   #episode-selector {
@@ -427,9 +411,6 @@ a:hover {
   #show-selector {
     margin-top: 1rem;
     width: 100%;
-  }
-  .cards-grid {
-    padding-top: 0;
   }
 
   .container {
