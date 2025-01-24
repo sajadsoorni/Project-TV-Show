@@ -104,8 +104,8 @@ const createEpisodeCard = (episode) => {
   const card = document.createElement("div");
   card.classList.add("card");
 
-  const imgWrapper = document.createElement("div");
-  imgWrapper.classList.add("episode-image-wrapper");
+  const episodeImgWrapper = document.createElement("div");
+  episodeImgWrapper.classList.add("episode-image-wrapper");
   const placeholderImageUrl = `https://placehold.co/250x140?text=${formatEpisodeCode(episode.season, episode.number)}`;
   const img = document.createElement("img");
   img.src = episode.image?.medium || placeholderImageUrl;
@@ -164,8 +164,8 @@ const createEpisodeCard = (episode) => {
   description.innerHTML = episode.summary || "No description available.";
 
   cardContent.append(episodeNumber, title, description);
-  card.append(imgWrapper, cardContent);
-  imgWrapper.append(img, dateAndTime);
+  card.append(episodeImgWrapper, cardContent);
+  episodeImgWrapper.append(img, dateAndTime);
   dateAndTime.append(airDate, airTime, runTime);
   airTime.appendChild(clockIcon);
   airDate.appendChild(dateIcon);
@@ -178,16 +178,67 @@ const filterShowsByGenre = (genre) => {
   return cache.shows.filter((show) => show.genres.includes(genre));
 };
 
+// Function to create star rating
+const createStarRating = (rating) => {
+  const fullRatingContainer = document.createElement("div");
+  fullRatingContainer.classList.add("full-rating-container");
+
+  // If no rating, return an empty container with "No Rating" text
+  if (!rating) {
+    const noRatingText = document.createElement("span");
+    noRatingText.textContent = "No Rating";
+    noRatingText.classList.add("no-rating");
+    fullRatingContainer.appendChild(noRatingText);
+    return fullRatingContainer;
+  }
+
+  // Ensure rating is between 0 and 10
+  const normalizedRating = Math.min(Math.max(rating || 0, 0), 10);
+
+  // Calculate full, half, and empty stars
+  const fullStars = Math.floor(normalizedRating / 2);
+  const halfStar = normalizedRating % 2 >= 1 ? 1 : 0;
+  const emptyStars = 5 - fullStars - halfStar;
+
+  // Create star elements
+  for (let i = 0; i < fullStars; i++) {
+    const star = document.createElement("li");
+    star.className = "sajad-iconstar";
+    fullRatingContainer.appendChild(star);
+  }
+
+  if (halfStar) {
+    const star = document.createElement("li");
+    star.className = "sajad-iconstar-half-alt";
+    fullRatingContainer.appendChild(star);
+  }
+
+  for (let i = 0; i < emptyStars; i++) {
+    const star = document.createElement("li");
+    star.className = "sajad-iconstar-empty";
+    fullRatingContainer.appendChild(star);
+  }
+
+  return fullRatingContainer;
+};
+
 // Create show card
 const createShowCard = (show) => {
   const card = document.createElement("div");
   card.classList.add("tv-show-card");
+
+  const showImgWrapper = document.createElement("div");
+  showImgWrapper.classList.add("show-img-wrapper");
+  const fullRatingContainer = document.createElement("div");
+  fullRatingContainer.classList.add("full-rating-container");
+  const starRating = createStarRating(show.rating.average);
 
   const img = document.createElement("img");
   img.src = show.image?.medium || "placeholder.jpg";
   img.alt = show.name;
   img.classList.add("tv-show-image");
   img.loading = "lazy";
+  showImgWrapper.append(img, starRating);
 
   const content = document.createElement("div");
   content.classList.add("tv-show-content");
@@ -208,50 +259,83 @@ const createShowCard = (show) => {
     loadEpisodesForShow(show.id);
   });
 
+  const filterShowsWithoutGenres = () => {
+    const showsWithoutGenres = cache.shows.filter((show) => !show.genres || show.genres.length === 0);
+
+    displayShows(showsWithoutGenres);
+    mainHeader.textContent = "Shows Without Genres";
+  };
+
   const genres = document.createElement("div");
   genres.classList.add("tv-show-genres");
   const tagIcon = document.createElement("li");
   tagIcon.classList.add("sajad-icontag");
 
-  // Create clickable genre spans
-  const genreSpans = show.genres.map((genre) => {
-    const genreSpan = document.createElement("span");
-    genreSpan.textContent = genre;
-    genreSpan.classList.add("genre-tag");
-    genreSpan.style.cursor = "pointer";
+  if (!show.genres || show.genres.length === 0) {
+    const noGenresSpan = document.createElement("span");
+    noGenresSpan.textContent = "No Genres";
+    noGenresSpan.classList.add("genre-tag", "no-genres");
+    noGenresSpan.style.cursor = "pointer";
 
-    genreSpan.addEventListener("click", () => {
-      const filteredShows = filterShowsByGenre(genre);
-      displayShows(filteredShows);
-      mainHeader.textContent = `${genre} Shows`;
+    noGenresSpan.addEventListener("click", filterShowsWithoutGenres);
+
+    genres.append(tagIcon, noGenresSpan);
+  } else {
+    const genreSpans = show.genres.map((genre) => {
+      const genreSpan = document.createElement("span");
+      genreSpan.textContent = genre;
+      genreSpan.classList.add("genre-tag");
+      genreSpan.style.cursor = "pointer";
+
+      genreSpan.addEventListener("click", () => {
+        const filteredShows = filterShowsByGenre(genre);
+        displayShows(filteredShows);
+        mainHeader.textContent = `${genre} Shows`;
+      });
+
+      return genreSpan;
     });
 
-    return genreSpan;
-  });
+    // Join genre spans with separator
+    genres.append(
+      tagIcon,
+      ...genreSpans.flatMap((span, index) => (index > 0 ? [document.createTextNode(" | "), span] : [span]))
+    );
+  }
 
-  // Join genre spans with comma
-  genres.append(
-    tagIcon,
-    ...genreSpans.flatMap((span, index) => (index > 0 ? [document.createTextNode(" | "), span] : [span]))
-  );
-
-  const status = document.createElement("p");
+  const statusContainer = document.createElement("div");
+  statusContainer.classList.add("status-container");
+  const status = document.createElement("span");
   status.classList.add("tv-show-status");
   status.textContent = `Status: ${show.status}`;
-  const rating = document.createElement("p");
+  const statusIcon = document.createElement("li");
+  statusIcon.className = "sajad-iconexclamation";
+  statusContainer.append(statusIcon, status);
+
+  const ratingContainer = document.createElement("div");
+  ratingContainer.classList.add("rating-container");
+  const rating = document.createElement("span");
   rating.classList.add("tv-show-rating");
   rating.textContent = `Rating: ${show.rating.average || "N/A"}`;
+  const ratingIcon = document.createElement("li");
+  ratingIcon.className = "sajad-iconstar-empty";
+  ratingContainer.append(ratingIcon, rating);
 
-  const runtime = document.createElement("p");
+  const runtimeContainer = document.createElement("div");
+  runtimeContainer.classList.add("runtime-container");
+  const runtime = document.createElement("span");
   runtime.classList.add("tv-show-runtime");
   runtime.textContent = `Runtime: ${show.runtime} minutes`;
+  const runtimeIcon = document.createElement("li");
+  runtimeIcon.className = "sajad-iconclock-1";
+  runtimeContainer.append(runtimeIcon, runtime);
 
   const summary = document.createElement("div");
   summary.classList.add("tv-show-summary");
   summary.innerHTML = show.summary || "No summary available.";
 
-  content.append(title, genres, status, rating, runtime, summary);
-  card.append(img, content);
+  content.append(title, genres, statusContainer, ratingContainer, runtimeContainer, summary);
+  card.append(showImgWrapper, content);
   return card;
 };
 
