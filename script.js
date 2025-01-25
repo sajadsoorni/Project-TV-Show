@@ -245,7 +245,6 @@ const createShowCard = (show) => {
 
   const title = document.createElement("h2");
   title.textContent = show.name;
-  title.style.width = "fit-content";
   title.classList.add("tv-show-title");
   title.addEventListener("click", () => {
     mainHeader.textContent = show.name;

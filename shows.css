@@ -48,15 +48,19 @@
   left: 0;
   bottom: 0;
   display: flex;
-  justify-content: space-around;
+  justify-content: start;
   align-items: flex-end;
   height: 4rem;
-  padding: 1rem 4rem 0.2rem;
+  padding: 1rem 0.8rem 0.3rem;
   background: linear-gradient(0deg, #000000a0 0%, rgba(253, 187, 45, 0) 100%);
   transition: background 1s ease, color 1s ease;
   color: gold;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   list-style: none;
+}
+
+.full-rating-container li {
+  margin: -2px;
 }
 
 .tv-show-card:hover .full-rating-container {
@@ -73,13 +77,15 @@
 }
 
 .tv-show-title {
-  margin: 0;
   color: #2f3640;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
   transition: color 0.2s ease;
   line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tv-show-title:hover {
@@ -172,16 +178,15 @@
 
 .tv-show-summary {
   color: #353b48;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  margin-top: 10px;
-  padding-right: 0.4rem;
-  border-radius: 2px;
-  max-height: 10rem;
-
-  flex-grow: 1;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+  max-height: 11rem;
   position: relative;
+  padding: 0 1rem 1rem 0;
   overflow-y: auto;
+  -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 25px), transparent 100%);
+  mask-image: linear-gradient(to bottom, black calc(100% - 25px), transparent 100%);
 }
 
 .tv-show-summary::-webkit-scrollbar {
@@ -211,19 +216,11 @@
   .tv-show-title {
     font-size: 1rem;
   }
-  .tv-show-summary {
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 600px) {
   .tv-show-card {
     flex: 1 1 250px; /* Flex-grow, flex-shrink, flex-basis */
     max-width: 100%;
-  }
-
-  .full-rating-container {
-    justify-content: start;
-    padding: 1rem 1rem 0.2rem;
   }
 }

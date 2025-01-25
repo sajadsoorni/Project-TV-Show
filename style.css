@@ -214,7 +214,7 @@ ul.breadcrumb li span:hover {
 .cards-flex {
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .card {
@@ -222,7 +222,6 @@ ul.breadcrumb li span:hover {
   max-width: 400px;
   position: relative;
   break-inside: avoid;
-  margin-bottom: 2rem;
   background: white;
   border-radius: 8px;
   overflow: hidden;
@@ -286,7 +285,10 @@ ul.breadcrumb li span:hover {
 .episode-card-content h2 {
   color: #2f3640;
   margin-bottom: 0.5rem;
-  font-size: 1.25rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .episode-number {
@@ -302,10 +304,10 @@ ul.breadcrumb li span:hover {
 
 .paragraph {
   color: #353b48;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   line-height: 1.5;
-  margin-top: 0.5rem;
-  max-height: 10rem;
+  margin: 0.5rem 0;
+  max-height: 11rem;
   position: relative;
   padding: 0 1rem 1rem 0;
   overflow-y: auto;
@@ -358,9 +360,6 @@ a:hover {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .paragraph {
-    font-size: 0.8rem;
-  }
 }
 
 @media (max-width: 900px) {
@@ -378,10 +377,6 @@ a:hover {
 
   .container {
     padding: 1rem;
-  }
-
-  .paragraph {
-    font-size: 0.8rem;
   }
 }
 
